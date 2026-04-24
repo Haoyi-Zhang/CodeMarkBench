@@ -21,10 +21,20 @@ The materialized canonical matrix index is the only release-facing source of tru
 - release-facing summary figures and tables
 - archival artifact checksums and matrix identity
 
-The archival Zenodo record is [10.5281/zenodo.19731216](https://doi.org/10.5281/zenodo.19731216).
+The corrected archival Zenodo record is [10.5281/zenodo.19740954](https://doi.org/10.5281/zenodo.19740954).
 It records the same matrix index SHA-256, the GitHub companion commit used for
-the archived bundle, and the raw/sanitized-bundle checksums. The concept DOI is
-[10.5281/zenodo.19731215](https://doi.org/10.5281/zenodo.19731215).
+the archived bundle, and the raw/sanitized-bundle checksums.
+
+Two code identities can appear in release notes:
+
+- the **archived sanitized-bundle source commit**, recorded in the Zenodo
+  manifest, identifies the GitHub tree used to assemble that deposited bundle
+- the **current GitHub `main` commit** may be newer when it contains
+  documentation-only DOI, recovery, or release-note updates after the archival
+  bundle was assembled
+
+Both identities point to the same canonical matrix index SHA-256 above. Result
+claims must follow the matrix identity, not a later documentation-only commit.
 
 ## Formal Provenance Story
 

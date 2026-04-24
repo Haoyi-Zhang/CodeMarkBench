@@ -39,15 +39,14 @@ is `1.0` for the four public method rows.
    for the method-level summary.
 2. Read
    `suite_all_models_methods_utility_robustness_summary.*`,
-   `suite_all_models_methods_per_attack_robustness_breakdown.*`, and
-   `suite_all_models_methods_core_vs_stress_robustness_summary.*` before using
+   `per_attack_robustness_breakdown.*`, and
+   `core_vs_stress_robustness_summary.*` before using
    the headline score.
 3. Use
-   `suite_all_models_methods_score_decomposition.*`,
-   `suite_all_models_methods_robustness_factor_decomposition.*`,
-   `suite_all_models_methods_utility_factor_decomposition.*`,
-   `suite_all_models_methods_generalization_axis_breakdown.*`, and
-   `suite_all_models_methods_gate_decomposition.*` to audit why a score is
+   `robustness_factor_decomposition.*`,
+   `utility_factor_decomposition.*`,
+   `generalization_axis_breakdown.*`, and
+   `gate_decomposition.*` to audit why a score is
    high, low, zero, or unsupported.
 4. Use the figures only as compact structure and trend views. Exact values
    live in the tables.
@@ -62,6 +61,8 @@ Some zero or constant fields are expected by the metric contract:
 | `raw_composite_strict` | `0.0000` in method-level rows | Strict top-level diagnostic using `Gate * raw_core_score_strict * raw_generalization_strict`; it is intentionally harsher than `CodeMarkScore`. |
 | `utility_support_rate` | `1.0000` in the model-by-method scan | Coverage/status field: the public utility factors are available. It is not a claim that utility performance is perfect. |
 | `semantic_validation_rate` | `1.0000` in the model-by-method scan | The released rows satisfy the semantic-validation predicate used by the utility factor. It is one exact-value utility component, not a claim that overall utility or model quality is perfect. |
+| method-level `robustness_support_rate` | `1.0000` for the four public methods | Every core-tier attack row needed for the method-level public robustness aggregate is represented. This is not the same field as per-attack factor coverage. |
+| per-attack `attack_support_rate` | may be below `1.0000` | Factor-level support within an attack row. It can be lower than method-level `robustness_support_rate` because it measures a narrower denominator. |
 | model-by-method `cross_family_transfer` | blank/NA | Cross-family transfer is not evaluated at the per-model slice, because a single model row does not contain a cross-family model comparison. |
 | model-by-method `scale_consistency` | blank/NA | Scale consistency is a diagnostic requiring a family-scale comparison, so it is not meaningful in isolated model rows. |
 
@@ -80,6 +81,19 @@ The stress tier is exported separately through table-first evidence. It should
 not be silently folded into the headline score or hidden behind a single
 optimistic scalar. Reviewers should inspect both core-tier and stress-tier
 tables when judging whether a method is robust enough for deployment.
+
+`headline_generalization` should be read as a cross-slice stability summary
+under the released matrix, not as a universal deployment-robustness guarantee.
+The strict counterpart, `raw_generalization_strict`, is intentionally harsher
+and can be zero when a required strict axis is unavailable or zero. Keeping both
+fields is deliberate: the public headline avoids collapsing a table into one
+special unsupported case, while the strict diagnostic preserves a fail-closed
+audit trail.
+
+Utility also remains table-first. `utility` summarizes supported quality,
+semantic-preservation, and semantic-validation factors. It does not certify
+that every generated program is optimal, and it should be checked alongside
+`raw_utility_strict`, functional-quality tables, and timing tables.
 
 ## Repository and Artifact Split
 

@@ -19,12 +19,18 @@ The exact pinned repositories and commits for those four baselines live in [`thi
 
 Two white-box source-code watermarking methods for LLM-based code generation were screened for inclusion and then excluded from the active runtime roster.
 
-| Method | Screening outcome | Public basis used for screening | Why it is excluded from the active benchmark |
+Screening date for this release note: `2026-04-25`.
+
+| Method | Public basis used for screening | Required assets for this benchmark | Why it is excluded from the active benchmark |
 | --- | --- | --- | --- |
-| `CodeIP` | Excluded after baseline screening | The public repository exposes code, but the official public artifact set does not provide the complete runtime assets required for a reproducible official-public integration path. | The benchmark requires an official-public, runtime-comparable, reproducible execution path. Without a complete official public artifact set, `CodeIP` cannot satisfy that inclusion standard. |
-| `Practical and Effective Code Watermarking for Large Language Models` | Excluded after baseline screening | The public implementation path relies on training or model modification rather than a shared runtime-generation adapter contract. | The active benchmark compares methods that can be executed under the same runtime-generation contract. Training/model-modifying methods fall outside that comparison scope. |
+| `CodeIP` | ACL Anthology record: `https://aclanthology.org/2024.findings-emnlp.541/`; repository references were also checked through public project mentions. | A complete official-public runtime path with runnable embedding/detection code, reproducible assets, and a stable adapter contract for the same local-model generation loop used by the four active baselines. | The release did not identify a complete official-public artifact set that can be placed under the same runtime-generation contract without reconstructing missing method-specific assets. It is therefore documented as related work rather than listed on the active runtime leaderboard. |
+| `Practical and Effective Code Watermarking for Large Language Models` / `ACW` | OpenReview record: `https://openreview.net/forum?id=RpE4HeuX69`; linked code: `https://github.com/TimeLovercc/code-watermark`. | A runtime-only watermarking adapter that can be executed without training or model modification under the benchmark-controlled generation policy. | The public method description and code path are centered on AST-guided learning/training and model-side watermark embedding. That is a valuable but different experimental contract, so it is outside the runtime-generation comparison surface used for `STONE`, `SWEET`, `EWD`, and `KGW`. |
 
 These exclusions do not claim the methods are unimportant. They only state that the current benchmark release does not place them on the same active runtime leaderboard as `STONE`, `SWEET`, `EWD`, and `KGW`.
+
+If future official artifacts expose a complete runtime-comparable path for
+either method, the benchmark can add a new adapter and rerun the canonical
+matrix as a new release rather than backfilling the current `140/140` result.
 
 ## Prior Work Outside The Active Roster
 

@@ -13,10 +13,22 @@ The archived result of record is the completed canonical single-host run:
 `run_count = 140`, `success_count = 140`, `failed_count = 0`, and
 `execution_mode = single_host_canonical`.
 
-The published archival record is [10.5281/zenodo.19731216](https://doi.org/10.5281/zenodo.19731216).
+The corrected published archival record is [10.5281/zenodo.19740954](https://doi.org/10.5281/zenodo.19740954).
 It contains the raw matrix artifact, `raw_results_manifest.json`, `SHA256SUMS.txt`,
-and the sanitized release bundle. The concept DOI is
-[10.5281/zenodo.19731215](https://doi.org/10.5281/zenodo.19731215).
+and the sanitized release bundle.
+
+The exact file names in the archival record are:
+
+- `CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst`
+- `CodeMarkBench-sanitized-release-bundle-20260424T163046.tar.zst`
+- `raw_results_manifest.json`
+- `SHA256SUMS.txt`
+
+The raw archive is the matrix evidence layer. The sanitized bundle is a compact
+repository-style snapshot of the release surface; GitHub `main` may contain
+documentation-only release-note updates after that archived bundle was created.
+For byte-identical restoration of the archived sanitized bundle, use the
+GitHub commit recorded in `raw_results_manifest.json`.
 
 ## What Can Be Reproduced
 
@@ -57,13 +69,32 @@ Primary review files:
 
 ## Level 2: Rebuild Summary Exports From Zenodo
 
-After downloading the raw-results artifact from
-[10.5281/zenodo.19731216](https://doi.org/10.5281/zenodo.19731216),
-restore the raw matrix tree so that
-the canonical index exists at:
+Install the decompressor and download the Zenodo files:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y zstd ca-certificates curl
+curl -L -o CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst \
+  'https://zenodo.org/records/19740954/files/CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst?download=1'
+curl -L -o raw_results_manifest.json \
+  'https://zenodo.org/records/19740954/files/raw_results_manifest.json?download=1'
+curl -L -o SHA256SUMS.txt \
+  'https://zenodo.org/records/19740954/files/SHA256SUMS.txt?download=1'
+sha256sum -c SHA256SUMS.txt
+```
+
+Restore the raw matrix tree from the raw-results artifact so that the canonical
+index exists at:
 
 ```text
 results/matrix/suite_all_models_methods/matrix_index.json
+```
+
+The archive stores repo-relative paths, so extraction from the repository root
+restores the expected layout:
+
+```bash
+tar --use-compress-program=zstd -xf CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst -C .
 ```
 
 Then regenerate the summary surface:
@@ -93,8 +124,8 @@ git. The raw matrix is restored only from the archival artifact.
 Recommended execution class:
 
 - one Linux host
-- eight visible CUDA devices
-- enough disk for model caches, upstream checkouts, and raw result outputs
+- eight visible CUDA devices; the released run used eight A800 40GB-class GPUs
+- at least 32 CPU cores, 128 GB RAM, and 1.5 TB free disk are recommended for model caches, upstream checkouts, raw matrix outputs, and temporary archives
 - Python `3.10+`
 - C/C++, Java, Node.js, and Go toolchains for executable validation
 - Hugging Face access for the exact pinned model identifiers in `README.md`
@@ -104,11 +135,28 @@ Fresh-host setup:
 ```bash
 git clone https://github.com/Haoyi-Zhang/CodeMarkBench.git
 cd CodeMarkBench
-python -m venv .venv/tosem_release
+sudo apt-get update
+sudo apt-get install -y build-essential git curl ca-certificates zstd nodejs npm openjdk-21-jdk golang-go
+bash scripts/remote/bootstrap_linux_gpu.sh --install --venv .venv/tosem_release
 source .venv/tosem_release/bin/activate
-pip install -r requirements.txt -r requirements-remote.txt
 bash scripts/fetch_runtime_upstreams.sh all
 python scripts/build_suite_manifests.py
+```
+
+Model-cache readiness is explicit. The release configs use local snapshot
+loading for the formal run, so either pre-download the exact model revisions
+listed in `README.md` into `model_cache/huggingface`, or run readiness with
+token-backed probing before switching to strict cache-only execution:
+
+```bash
+python scripts/check_model_access.py --token-env HF_ACCESS_TOKEN
+python scripts/audit_full_matrix.py \
+  --manifest configs/matrices/suite_all_models_methods.json \
+  --profile suite_all_models_methods \
+  --probe-hf-access \
+  --model-load-smoke \
+  --runtime-smoke \
+  --skip-provider-credentials
 ```
 
 Readiness gates:
@@ -144,6 +192,18 @@ python scripts/reviewer_workflow.py regenerate \
   --table-dir results/tables/suite_all_models_methods
 python scripts/export_dataset_statistics.py
 python scripts/reviewer_workflow.py browse
+```
+
+Final release figures are rendered with Times New Roman available and
+`--require-times-new-roman`. If a fresh cloud host lacks that font, install it
+or use `--allow-font-fallback` only for inspection, not for the final release
+surface.
+
+Monitor a long-running full matrix with:
+
+```bash
+python scripts/monitor_matrix.py --matrix-index results/matrix/suite_all_models_methods/matrix_index.json
+tail -f results/launchers/suite_all_models_methods/latest.log
 ```
 
 For custom experiments, use a different `--profile`, matrix output root, figure

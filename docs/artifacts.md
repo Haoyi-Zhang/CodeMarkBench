@@ -51,7 +51,16 @@ The public release story is stable:
 
 - GitHub is the canonical companion repository for code, docs, and tracked summary exports
 - Zenodo is the archival home for the rerun-backed raw result tree
-- the archival Zenodo record is [10.5281/zenodo.19731216](https://doi.org/10.5281/zenodo.19731216), with concept DOI [10.5281/zenodo.19731215](https://doi.org/10.5281/zenodo.19731215)
+- the corrected archival Zenodo record is [10.5281/zenodo.19740954](https://doi.org/10.5281/zenodo.19740954)
+
+Published Zenodo files for the result-of-record release:
+
+| File | Role | SHA-256 |
+| --- | --- | --- |
+| `CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst` | Raw `140/140` matrix evidence and per-run reports. | `29d0c20a5f5e99cc24d61e7479e4d788565161c78c3660e560412eb502d38a2d` |
+| `CodeMarkBench-sanitized-release-bundle-20260424T163046.tar.zst` | Compact release-surface snapshot for archival recovery. | `44d4f05511d82e69545b7f2403f67fbdd45f6585a5c337f301c063614b8f8ed1` |
+| `raw_results_manifest.json` | Machine-readable artifact identity and GitHub companion commit. | recorded in `SHA256SUMS.txt` |
+| `SHA256SUMS.txt` | Download verification file. | archived with the Zenodo record |
 
 ## Raw Result Artifact Layout
 
@@ -84,7 +93,7 @@ The helper templates under `artifacts/` are packaging inputs used to generate th
 
 In other words:
 
-- GitHub guarantees code, canonical release inputs, docs, dataset statistics, and the materialized repository-tracked full-run summary exports in this companion repository
+- GitHub ships code, canonical release inputs, docs, dataset statistics, and the materialized repository-tracked full-run summary exports in this companion repository
 - GitHub does **not** guarantee the raw full-run matrix tree needed to regenerate those exports from scratch
 - Zenodo is the canonical home for the raw full-run result tree
 
@@ -100,6 +109,12 @@ The exact environment capture is refreshed by remote preflight for the formal re
 After downloading the raw artifact, regenerate the summary outputs locally:
 
 ```bash
+curl -L -o CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst \
+  'https://zenodo.org/records/19740954/files/CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst?download=1'
+curl -L -o SHA256SUMS.txt \
+  'https://zenodo.org/records/19740954/files/SHA256SUMS.txt?download=1'
+sha256sum -c SHA256SUMS.txt
+tar --use-compress-program=zstd -xf CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst -C .
 python scripts/refresh_report_metadata.py --matrix-index results/matrix/suite_all_models_methods/matrix_index.json
 python scripts/reviewer_workflow.py regenerate --matrix-index results/matrix/suite_all_models_methods/matrix_index.json --figure-dir results/figures/suite_all_models_methods --table-dir results/tables/suite_all_models_methods
 python scripts/export_dataset_statistics.py

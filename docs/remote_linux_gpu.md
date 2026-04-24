@@ -41,8 +41,10 @@ The older `scripts/remote/run_suite_matrix.sh --run-full` wrapper is now enginee
 ## Formal Commands
 
 ```bash
-pip install -r requirements.txt -r requirements-remote.txt
-bash scripts/remote/bootstrap_linux_gpu.sh --venv .venv/tosem_release
+sudo apt-get update
+sudo apt-get install -y build-essential git curl ca-certificates zstd nodejs npm openjdk-21-jdk golang-go
+bash scripts/remote/bootstrap_linux_gpu.sh --install --venv .venv/tosem_release
+source .venv/tosem_release/bin/activate
 bash scripts/fetch_runtime_upstreams.sh all
 python scripts/build_suite_manifests.py
 python scripts/audit_benchmarks.py --profile suite
@@ -50,6 +52,12 @@ python scripts/audit_full_matrix.py --manifest configs/matrices/suite_all_models
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/remote/run_preflight.sh --formal-full-only
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/remote/run_formal_single_host_full.sh --command-timeout-seconds 259200
 ```
+
+The strict-cache audit expects the pinned Hugging Face snapshots to already be
+available under the configured local model cache. On a fresh host, first fill
+or validate access to that cache with `python scripts/check_model_access.py
+--token-env HF_ACCESS_TOKEN` and an audit pass using `--probe-hf-access`; then
+rerun the strict-cache audit before preflight.
 
 `run_preflight.sh --formal-full-only` validates:
 
@@ -80,6 +88,9 @@ The environment-of-record is written to:
 - `results/environment/runtime_environment.md`
 
 The formal rerun should refresh these files under the same eight-GPU execution class used for the release result of record.
+For public release captures, pass `--public-safe-paths` so the persisted files
+record the execution class and code identity without exposing host aliases or
+absolute virtualenv paths.
 
 ## Cleanup Rule
 

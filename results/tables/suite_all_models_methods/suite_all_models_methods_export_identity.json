@@ -1,73 +1,74 @@
 {
   "artifact_role": "suite_all_models_methods_release_summary_export_identity",
-  "schema_version": 1,
-  "matrix_index": "results/matrix/suite_all_models_methods/matrix_index.json",
-  "matrix_index_sha256": "7bf4cc0a125b0a9bf9e1cb8efb8cdfd089a3521c4f58b7daf399edc862d35c0b",
-  "manifest": "configs/matrices/suite_all_models_methods.json",
-  "profile": "suite_all_models_methods",
-  "canonical_manifest_digest": "99120f8bf3ac22ee42d343af2436e4317b958954140809341024cc41a395d22c",
-  "execution_mode": "single_host_canonical",
-  "run_count": 140,
-  "success_count": 140,
-  "failed_count": 0,
-  "code_snapshot_digest": "a53aa3ff792b5d62bdbf129846a40f2f99ebca23594d9e24a2754534d1d681ad",
-  "matrix_code_snapshot_digest": "278992e98b5f97dc5574320a25229db1e8e4211f3b4765036fc267abedf7a36a",
-  "execution_environment_fingerprint": "516f35ba63aeb6bb07a13b3abceb2e67a649342f4a4be9fe759703b1a6e9656f",
   "assembly_source_execution_modes": [
     "single_host_canonical"
   ],
   "assembly_source_index_count": 1,
-  "score_version": "codemarkbench-suite-v8-core-stress-public-summary",
+  "canonical_manifest_digest": "99120f8bf3ac22ee42d343af2436e4317b958954140809341024cc41a395d22c",
+  "code_snapshot_digest": "e77c05e89cbc7cbb180b1f2504cbcc3d9706ed72dcdd851beb84a45d6e238a6b",
+  "environment_capture_public_safe_paths": true,
+  "execution_environment_fingerprint": "28ee33d7e551f2adc5aed51a4417e50505dcbba9075f08d772ce69682cd27a7d",
+  "execution_mode": "single_host_canonical",
+  "failed_count": 0,
+  "figure_stems": [
+    "suite_all_models_methods_score_decomposition",
+    "suite_all_models_methods_detection_vs_utility"
+  ],
+  "manifest": "configs/matrices/suite_all_models_methods.json",
+  "matrix_code_snapshot_digest": "278992e98b5f97dc5574320a25229db1e8e4211f3b4765036fc267abedf7a36a",
+  "matrix_index": "results/matrix/suite_all_models_methods/matrix_index.json",
+  "matrix_index_sha256": "7bf4cc0a125b0a9bf9e1cb8efb8cdfd089a3521c4f58b7daf399edc862d35c0b",
   "model_roster": [
     {
       "model": "Qwen/Qwen2.5-Coder-14B-Instruct",
+      "model_family": "qwen25",
       "model_revision": "aedcc2d42b622764e023cf882b6652e646b95671",
-      "model_slug": "qwen25_14b",
-      "model_family": "qwen25"
+      "model_slug": "qwen25_14b"
     },
     {
       "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "model_family": "qwen25",
       "model_revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
-      "model_slug": "qwen25_7b",
-      "model_family": "qwen25"
+      "model_slug": "qwen25_7b"
     },
     {
       "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "model_family": "qwen25",
       "model_revision": "2e1fd397ee46e1388853d2af2c993145b0f1098a",
-      "model_slug": "qwen25_1p5b",
-      "model_family": "qwen25"
+      "model_slug": "qwen25_1p5b"
     },
     {
       "model": "bigcode/starcoder2-7b",
+      "model_family": "starcoder2",
       "model_revision": "bb9afde76d7945da5745592525db122d4d729eb1",
-      "model_slug": "starcoder2_7b",
-      "model_family": "starcoder2"
+      "model_slug": "starcoder2_7b"
     },
     {
       "model": "deepseek-ai/deepseek-coder-6.7b-instruct",
+      "model_family": "deepseek_coder",
       "model_revision": "e5d64addd26a6a1db0f9b863abf6ee3141936807",
-      "model_slug": "deepseek_coder_6p7b",
-      "model_family": "deepseek_coder"
+      "model_slug": "deepseek_coder_6p7b"
     }
   ],
+  "profile": "suite_all_models_methods",
+  "required_figure_hashes": {
+    "suite_all_models_methods_detection_vs_utility.csv": "fbed851a493e38de76d5ee449ce5fb1685d4a3bc7edb306889ada9290c60fc32",
+    "suite_all_models_methods_detection_vs_utility.json": "a996524ef47c9762b4cf21c16ec191805fd23a6ed12f210facf8fc580a3d1a58",
+    "suite_all_models_methods_detection_vs_utility.pdf": "2a7506da41cffecb120960f45e14f70c2761bdde56d0bcf9e3385e5ff56c6ddd",
+    "suite_all_models_methods_detection_vs_utility.png": "3565f1fec2288ab1dfa3a3eb7740c2fdc05c648acd4bd74b022c6d11ef5c2b83",
+    "suite_all_models_methods_score_decomposition.csv": "75e88049c70a3cdbfa6831aabb61f633064ea9aedcd20bc20124964ef49a3abb",
+    "suite_all_models_methods_score_decomposition.json": "4e544c83399705887ddb694659a72c4a004d3410a9c5e4680ff525a501b712ce",
+    "suite_all_models_methods_score_decomposition.pdf": "33268e4624b226fcefa75dc331d29490448d46ff323569acfdbad57067dd8dad",
+    "suite_all_models_methods_score_decomposition.png": "f2f31af503019e7b4b1814b6f1ed8d0a39cc4fba33a62f58f94bd3c5466f29a4"
+  },
   "required_table_hashes": {
     "method_summary.json": "45600bd0326bf6a2b70728d144b94a5b5349d337e888979442bc099feac38ae3",
     "suite_all_models_methods_method_master_leaderboard.json": "c20abe47a27f0b66449caa8312250a8b7f7356e68ebe233143911b41923a4d3e",
     "suite_all_models_methods_method_model_leaderboard.json": "80cc59dc6b2d203d10d3a7c05cf79f05047fd14683780f17d0c4698fe6200c38",
     "suite_all_models_methods_model_method_functional_quality.json": "3edbfdf14d08769f68b5bea2b4da2ddf5787d81a90b04609a58ed692b6b207db"
   },
-  "required_figure_hashes": {
-    "suite_all_models_methods_score_decomposition.png": "f2f31af503019e7b4b1814b6f1ed8d0a39cc4fba33a62f58f94bd3c5466f29a4",
-    "suite_all_models_methods_score_decomposition.pdf": "33268e4624b226fcefa75dc331d29490448d46ff323569acfdbad57067dd8dad",
-    "suite_all_models_methods_score_decomposition.json": "4e544c83399705887ddb694659a72c4a004d3410a9c5e4680ff525a501b712ce",
-    "suite_all_models_methods_score_decomposition.csv": "75e88049c70a3cdbfa6831aabb61f633064ea9aedcd20bc20124964ef49a3abb",
-    "suite_all_models_methods_detection_vs_utility.png": "3565f1fec2288ab1dfa3a3eb7740c2fdc05c648acd4bd74b022c6d11ef5c2b83",
-    "suite_all_models_methods_detection_vs_utility.pdf": "2a7506da41cffecb120960f45e14f70c2761bdde56d0bcf9e3385e5ff56c6ddd",
-    "suite_all_models_methods_detection_vs_utility.json": "a996524ef47c9762b4cf21c16ec191805fd23a6ed12f210facf8fc580a3d1a58",
-    "suite_all_models_methods_detection_vs_utility.csv": "fbed851a493e38de76d5ee449ce5fb1685d4a3bc7edb306889ada9290c60fc32"
-  },
-  "figure_stems": [
-    "suite_all_models_methods_score_decomposition",
-    "suite_all_models_methods_detection_vs_utility"
-  ]
+  "run_count": 140,
+  "schema_version": 1,
+  "score_version": "codemarkbench-suite-v8-core-stress-public-summary",
+  "success_count": 140
 }

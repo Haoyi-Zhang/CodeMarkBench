@@ -41,6 +41,15 @@ Use this path with the raw-results artifact described in [`docs/artifacts.md`](a
 3. Regenerate figures and tables:
 
 ```bash
+curl -L -o CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst \
+  'https://zenodo.org/records/19740954/files/CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst?download=1'
+curl -L -o SHA256SUMS.txt \
+  'https://zenodo.org/records/19740954/files/SHA256SUMS.txt?download=1'
+sha256sum -c SHA256SUMS.txt
+tar --use-compress-program=zstd -xf CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst -C .
+```
+
+```bash
 python scripts/refresh_report_metadata.py --matrix-index results/matrix/suite_all_models_methods/matrix_index.json
 python scripts/reviewer_workflow.py regenerate --matrix-index results/matrix/suite_all_models_methods/matrix_index.json --figure-dir results/figures/suite_all_models_methods --table-dir results/tables/suite_all_models_methods
 python scripts/export_dataset_statistics.py

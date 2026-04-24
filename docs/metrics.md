@@ -17,6 +17,10 @@ Primary evidence is always:
 - gate diagnostics
 
 `CodeMarkScore` is a **secondary summary**, not the only result surface.
+It is not a weighted average of the displayed dimensions. The score is a
+gated, non-compensatory roll-up whose components remain visible in tables so
+reviewers can audit whether a method is limited by detection, robustness,
+utility, stealth, efficiency, or stability.
 
 ## Released Public Fields
 
@@ -150,6 +154,15 @@ This design means:
 - coverage gaps stay visible through `attack_support_rate` and `robustness_support_rate`
 - but one special `0` no longer forces the public aggregate to `0` when other supported attacks remain non-zero
 
+The two support fields intentionally have different denominators:
+
+- `robustness_support_rate` is method-level core-attack coverage
+- `attack_support_rate` is factor-level coverage within one attack row
+
+A method can therefore show `robustness_support_rate = 1.0` while a specific
+attack row has lower factor-level support. That combination means the core-tier
+attack family is represented, not that every lower-level factor is perfect.
+
 ### Strict robustness diagnostic
 
 The strict/raw release keeps a supported-factor diagnostic:
@@ -242,6 +255,9 @@ The strict/raw diagnostic counterpart is:
 \]
 
 `raw_core_score_strict` is not the headline score. It exists so strict transfer and scale diagnostics can be computed from a genuinely strict core surface rather than from the softened public summary.
+When the strict top-level path reaches zero, that is a real diagnostic signal,
+not a crashed-run marker. The canonical release matrix itself remains complete
+only when `run_count = 140`, `success_count = 140`, and `failed_count = 0`.
 
 ## Conditioned Stealth And Efficiency
 
@@ -320,6 +336,9 @@ Otherwise:
 \]
 
 This makes unsupported generalization neutral rather than misleadingly perfect, while still letting supported-zero slices remain visibly weak.
+`headline_generalization` is therefore a released cross-slice stability
+summary. It must not be described as absolute deployment robustness across all
+models, languages, tasks, or future watermarking methods.
 
 Descriptive rollups can also emit:
 

@@ -17,7 +17,7 @@ These files are the reviewer-facing execution truth for dataset statistics, subs
 Provenance is intentionally split:
 
 - `suite_humaneval_plus_release`, `suite_mbpp_plus_release`, `suite_humanevalx_release`, and `suite_mbxp_release` are public benchmark execution slices
-- `crafted_original_release`, `crafted_translation_release`, and `crafted_stress_release` are expert-constructed crafted benchmark families with manually finalized public release records
+- `crafted_original_release`, `crafted_translation_release`, and `crafted_stress_release` are curated crafted benchmark families with manually finalized public release records
 
 For the multilingual public execution layer, `HumanEval-X`, `MBXP-5lang`, and all three crafted families are interpreted through the same balanced five-language runtime set: `python`, `cpp`, `java`, `javascript`, and `go`. `MBXP-5lang` remains a deterministic five-language balanced slice with explicit smoke-overlay support in the release metadata.
 
@@ -31,7 +31,7 @@ Naming is also layered on purpose:
 
 Those aliases all refer to the same two public multilingual sources.
 
-Crafted prompt and metadata text now use the release-family wording directly; reviewer-facing rows should not be read as separate public benchmark lanes beyond the three crafted release families listed above.
+The normalized source files are frozen execution inputs for the completed run. Some task text may preserve generation-time wording from the canonical input snapshot; the release-facing claim is the documented curated/manual-review process for the three crafted families, not a credential claim about external certified experts.
 
 Some public benchmark rows also retain upstream test-section wording such as `manually generated tests` or `automatically generated tests`. That wording belongs to the upstream executable benchmark assets and should not be read as a claim about how the crafted release families in this repository were constructed.
 

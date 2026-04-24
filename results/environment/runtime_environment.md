@@ -1,20 +1,20 @@
 # Environment Capture
 
 - Label: `formal-single-host-full`
-- Hostname: `fb0a36e59344`
-- FQDN: `fb0a36e59344`
+- Hostname: `execution-host`
+- FQDN: `execution-host`
 - System: `Linux`
 - Release: `3.10.0-1160.118.1.el7.x86_64`
 - Version: `#1 SMP Wed Apr 24 16:01:50 UTC 2024`
 - Machine: `x86_64`
-- Python executable: `/root/data/codemarkbench_env/tosem_release_clean/bin/python`
+- Python executable: `<release-python>/python`
 - Python version: `3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]`
 - Execution mode: `single_host_canonical`
 - GPU count (physical): `8`
 - GPU count (visible execution class): `8`
 - CUDA_VISIBLE_DEVICES: `0,1,2,3,4,5,6,7`
-- Code snapshot digest: `a53aa3ff792b5d62bdbf129846a40f2f99ebca23594d9e24a2754534d1d681ad`
-- Execution environment fingerprint: `516f35ba63aeb6bb07a13b3abceb2e67a649342f4a4be9fe759703b1a6e9656f`
+- Code snapshot digest: `e77c05e89cbc7cbb180b1f2504cbcc3d9706ed72dcdd851beb84a45d6e238a6b`
+- Execution environment fingerprint: `28ee33d7e551f2adc5aed51a4417e50505dcbba9075f08d772ce69682cd27a7d`
 - GPU driver version: `550.163.01`
 - CUDA version (torch build): `12.4`
 - CUDA version (nvidia-smi): `12.4`
@@ -53,7 +53,7 @@ OpenJDK 64-Bit Server VM (build 21.0.10+7-Ubuntu-122.04, mixed mode, sharing)`
 - `go`: `ok`
   - stdout: `go version go1.22.12 linux/amd64`
 - `nvidia_smi`: `ok`
-  - stdout: `Sat Apr 25 00:57:21 2026       
+  - stdout: `Sat Apr 25 01:50:32 2026       
 +-----------------------------------------------------------------------------------------+
 | NVIDIA-SMI 550.163.01             Driver Version: 550.163.01     CUDA Version: 12.4     |
 |-----------------------------------------+------------------------+----------------------+

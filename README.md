@@ -9,7 +9,7 @@ At a glance:
 - benchmark surface: four pinned runtime baselines, five local code generation models, and seven executed benchmark sources
 - primary evidence surface: exact-value tables, released submetrics, and failure-oriented summary surfaces
 - formal result surface: one canonical single-host 8-GPU release contract, executed through standalone preflight and a direct canonical full rerun
-- main finding target: the benchmark is designed to expose reliability gaps in source-code watermarking under reviewer-safe edits, stronger stress attacks, and runtime-deployment constraints
+- main finding target: the released tables document reliability gaps in source-code watermarking under reviewer-safe edits, stronger stress attacks, and runtime-deployment constraints
 
 ## What Is In Scope
 
@@ -183,7 +183,7 @@ The exact formulas are documented in [`docs/metrics.md`](docs/metrics.md).
 
 ## Public Results And Artifacts
 
-This companion repository guarantees:
+This companion repository ships:
 
 - code
 - canonical benchmark inputs
@@ -191,11 +191,11 @@ This companion repository guarantees:
 - documentation and reproduction scripts
 - materialized repository-tracked full-run summary exports and regeneration scripts
 
-The repository does **not** guarantee a rerun-backed raw `140`-run full-suite tree in git. Large raw full-run outputs are intended to be distributed outside git via the external artifact path described in [`docs/artifacts.md`](docs/artifacts.md).
+The repository does **not** store the rerun-backed raw `140`-run full-suite tree in git. Large raw full-run outputs are distributed outside git through the Zenodo artifact path described in [`docs/artifacts.md`](docs/artifacts.md).
 
 The publication-facing result-of-record contract is the formal single-host `suite_all_models_methods` run on one Linux execution host with `CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7`. The current canonical matrix reports `run_count = 140`, `success_count = 140`, `failed_count = 0`, and `execution_mode = single_host_canonical`. GitHub is the lightweight companion surface for code, docs, canonical inputs, environment capture, and tracked summary exports; Zenodo carries the rerun-backed raw matrix tree and sanitized release bundle.
 
-The archival Zenodo record for the raw result artifact and sanitized release bundle is [`10.5281/zenodo.19731216`](https://doi.org/10.5281/zenodo.19731216). The concept DOI is [`10.5281/zenodo.19731215`](https://doi.org/10.5281/zenodo.19731215).
+The corrected archival Zenodo record for the raw result artifact and sanitized release bundle is [`10.5281/zenodo.19740954`](https://doi.org/10.5281/zenodo.19740954). If a reviewer wants to rebuild exactly the archived sanitized bundle rather than inspect the latest documentation branch, use the GitHub commit recorded in the Zenodo manifest; later `main` commits may contain documentation-only DOI or release-note updates.
 
 - dataset statistics figures live under [`results/figures/dataset_statistics`](results/figures/dataset_statistics)
 - dataset statistics tables live under [`results/tables/dataset_statistics`](results/tables/dataset_statistics)
@@ -220,11 +220,10 @@ Level 1 is the default reviewer path. Level 2 is the artifact-backed regeneratio
 
 ## Reviewer Quick Start
 
-The reviewer workflow exposes these entrypoints:
+The reviewer workflow exposes these entrypoints. Start with `browse` in a fresh clone; it does not require the raw matrix artifact:
 
 ```bash
 python scripts/reviewer_workflow.py browse
-python scripts/reviewer_workflow.py regenerate --matrix-index results/matrix/suite_all_models_methods/matrix_index.json --figure-dir results/figures/suite_all_models_methods --table-dir results/tables/suite_all_models_methods
 python scripts/reviewer_workflow.py subset --models Qwen/Qwen2.5-Coder-14B-Instruct --methods sweet_runtime --sources crafted_original
 python scripts/reviewer_workflow.py subset --profile reviewer_subset_all_sources --models Qwen/Qwen2.5-Coder-14B-Instruct --methods sweet_runtime
 python scripts/reviewer_workflow.py subset --models Qwen/Qwen2.5-Coder-7B-Instruct --methods kgw_runtime --sources humaneval_plus --limit 8
@@ -232,16 +231,20 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python scripts/reviewer_workflow.py full
 bash scripts/remote/run_reviewer_subset_pair.sh
 ```
 
+Run `regenerate` only after restoring the Zenodo raw artifact so that `results/matrix/suite_all_models_methods/matrix_index.json` exists:
+
+```bash
+python scripts/reviewer_workflow.py regenerate --matrix-index results/matrix/suite_all_models_methods/matrix_index.json --figure-dir results/figures/suite_all_models_methods --table-dir results/tables/suite_all_models_methods
+```
+
 Shell-native wrappers expose the same flows:
 
 ```bash
 bash scripts/reviewer_workflow.sh browse
-bash scripts/reviewer_workflow.sh regenerate --matrix-index results/matrix/suite_all_models_methods/matrix_index.json --figure-dir results/figures/suite_all_models_methods --table-dir results/tables/suite_all_models_methods
 bash scripts/reviewer_workflow.sh subset --models Qwen/Qwen2.5-Coder-14B-Instruct --methods sweet_runtime --sources crafted_original
 PYTHON_BIN=/path/to/tosem_release_env/bin/python bash scripts/reviewer_workflow.sh subset --models Qwen/Qwen2.5-Coder-7B-Instruct --methods kgw_runtime --sources humaneval_plus --limit 8
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/reviewer_workflow.sh full
 powershell -ExecutionPolicy Bypass -File scripts/reviewer_workflow.ps1 browse
-powershell -ExecutionPolicy Bypass -File scripts/reviewer_workflow.ps1 regenerate --matrix-index results/matrix/suite_all_models_methods/matrix_index.json --figure-dir results/figures/suite_all_models_methods --table-dir results/tables/suite_all_models_methods
 powershell -ExecutionPolicy Bypass -File scripts/reviewer_workflow.ps1 subset --models Qwen/Qwen2.5-Coder-14B-Instruct --methods sweet_runtime --sources crafted_original
 ```
 

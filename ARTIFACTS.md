@@ -5,8 +5,9 @@ See [docs/reproducibility.md](docs/reproducibility.md) for the fresh-cloud recov
 
 Published archival record:
 
-- Zenodo DOI: [10.5281/zenodo.19731216](https://doi.org/10.5281/zenodo.19731216)
-- Zenodo concept DOI: [10.5281/zenodo.19731215](https://doi.org/10.5281/zenodo.19731215)
+- Zenodo DOI: [10.5281/zenodo.19740954](https://doi.org/10.5281/zenodo.19740954)
+- Raw artifact: `CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst`
+- Raw artifact SHA-256: `29d0c20a5f5e99cc24d61e7479e4d788565161c78c3660e560412eb502d38a2d`
 
 In the public companion repository:
 
