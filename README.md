@@ -195,6 +195,8 @@ The repository does **not** guarantee a rerun-backed raw `140`-run full-suite tr
 
 The publication-facing result-of-record contract is the formal single-host `suite_all_models_methods` run on one Linux execution host with `CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7`. The current canonical matrix reports `run_count = 140`, `success_count = 140`, `failed_count = 0`, and `execution_mode = single_host_canonical`. GitHub is the lightweight companion surface for code, docs, canonical inputs, environment capture, and tracked summary exports; Zenodo carries the rerun-backed raw matrix tree and sanitized release bundle.
 
+The archival Zenodo record for the raw result artifact and sanitized release bundle is [`10.5281/zenodo.19731216`](https://doi.org/10.5281/zenodo.19731216). The concept DOI is [`10.5281/zenodo.19731215`](https://doi.org/10.5281/zenodo.19731215).
+
 - dataset statistics figures live under [`results/figures/dataset_statistics`](results/figures/dataset_statistics)
 - dataset statistics tables live under [`results/tables/dataset_statistics`](results/tables/dataset_statistics)
 - materialized full-run summary figures live under [`results/figures/suite_all_models_methods`](results/figures/suite_all_models_methods)

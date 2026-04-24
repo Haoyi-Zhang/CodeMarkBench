@@ -3,6 +3,11 @@
 See [docs/artifacts.md](docs/artifacts.md) for the canonical artifact-status, raw-results distribution, environment capture, and regeneration instructions.
 See [docs/reproducibility.md](docs/reproducibility.md) for the fresh-cloud recovery path used when the original execution server is no longer available.
 
+Published archival record:
+
+- Zenodo DOI: [10.5281/zenodo.19731216](https://doi.org/10.5281/zenodo.19731216)
+- Zenodo concept DOI: [10.5281/zenodo.19731215](https://doi.org/10.5281/zenodo.19731215)
+
 In the public companion repository:
 
 - the publication-facing result-of-record contract is the completed single-host canonical matrix with `140/140` successful runs and `failed_count = 0`

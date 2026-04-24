@@ -51,7 +51,7 @@ The public release story is stable:
 
 - GitHub is the canonical companion repository for code, docs, and tracked summary exports
 - Zenodo is the archival home for the rerun-backed raw result tree
-- the GitHub release and paper artifact note point to the archival Zenodo record once it is published
+- the archival Zenodo record is [10.5281/zenodo.19731216](https://doi.org/10.5281/zenodo.19731216), with concept DOI [10.5281/zenodo.19731215](https://doi.org/10.5281/zenodo.19731215)
 
 ## Raw Result Artifact Layout
 

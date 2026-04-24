@@ -13,7 +13,7 @@
 - GPU count (physical): `8`
 - GPU count (visible execution class): `8`
 - CUDA_VISIBLE_DEVICES: `0,1,2,3,4,5,6,7`
-- Code snapshot digest: `41c03cf7682fa8f4e7936f173d2b526a8f2f02ec0361d6d6913a4da648a15c89`
+- Code snapshot digest: `a53aa3ff792b5d62bdbf129846a40f2f99ebca23594d9e24a2754534d1d681ad`
 - Execution environment fingerprint: `516f35ba63aeb6bb07a13b3abceb2e67a649342f4a4be9fe759703b1a6e9656f`
 - GPU driver version: `550.163.01`
 - CUDA version (torch build): `12.4`
@@ -53,7 +53,7 @@ OpenJDK 64-Bit Server VM (build 21.0.10+7-Ubuntu-122.04, mixed mode, sharing)`
 - `go`: `ok`
   - stdout: `go version go1.22.12 linux/amd64`
 - `nvidia_smi`: `ok`
-  - stdout: `Sat Apr 25 00:01:39 2026       
+  - stdout: `Sat Apr 25 00:57:21 2026       
 +-----------------------------------------------------------------------------------------+
 | NVIDIA-SMI 550.163.01             Driver Version: 550.163.01     CUDA Version: 12.4     |
 |-----------------------------------------+------------------------+----------------------+

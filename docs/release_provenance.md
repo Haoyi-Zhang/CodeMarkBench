@@ -21,6 +21,11 @@ The materialized canonical matrix index is the only release-facing source of tru
 - release-facing summary figures and tables
 - archival artifact checksums and matrix identity
 
+The archival Zenodo record is [10.5281/zenodo.19731216](https://doi.org/10.5281/zenodo.19731216).
+It records the same matrix index SHA-256, the GitHub companion commit used for
+the archived bundle, and the raw/sanitized-bundle checksums. The concept DOI is
+[10.5281/zenodo.19731215](https://doi.org/10.5281/zenodo.19731215).
+
 ## Formal Provenance Story
 
 The formal provenance story is one clean one-shot single-host rerun. Earlier segmented, recovery, or sharded engineering attempts are not part of the formal public result identity and do not define the release-facing provenance story.

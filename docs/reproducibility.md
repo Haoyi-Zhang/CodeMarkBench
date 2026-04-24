@@ -13,6 +13,11 @@ The archived result of record is the completed canonical single-host run:
 `run_count = 140`, `success_count = 140`, `failed_count = 0`, and
 `execution_mode = single_host_canonical`.
 
+The published archival record is [10.5281/zenodo.19731216](https://doi.org/10.5281/zenodo.19731216).
+It contains the raw matrix artifact, `raw_results_manifest.json`, `SHA256SUMS.txt`,
+and the sanitized release bundle. The concept DOI is
+[10.5281/zenodo.19731215](https://doi.org/10.5281/zenodo.19731215).
+
 ## What Can Be Reproduced
 
 Use the three levels below depending on the review need.
@@ -52,7 +57,9 @@ Primary review files:
 
 ## Level 2: Rebuild Summary Exports From Zenodo
 
-After downloading the raw-results artifact, restore the raw matrix tree so that
+After downloading the raw-results artifact from
+[10.5281/zenodo.19731216](https://doi.org/10.5281/zenodo.19731216),
+restore the raw matrix tree so that
 the canonical index exists at:
 
 ```text
