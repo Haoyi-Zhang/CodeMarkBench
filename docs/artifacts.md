@@ -75,13 +75,18 @@ The archival raw artifact restores the finished full-run tree under:
 results/matrix/suite_all_models_methods/
 ```
 
-and also includes:
+and the formal execution environment capture under:
 
 ```text
-results/certifications/
-results/audits/
 results/environment/
 ```
+
+Machine-specific preflight/audit residues such as `results/certifications/`
+and `results/audits/` are intentionally not part of the public raw-results
+archive. They are local process evidence, may contain execution-host paths, and
+are replaced in the public release contract by the archived matrix tree,
+environment capture, checksums, manifest identity, and reviewer-facing
+validation scripts.
 
 ## Published Artifact Metadata
 
