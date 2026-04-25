@@ -216,6 +216,7 @@ Later `main` commits may contain documentation, validation, or companion-surface
 - citation metadata lives in [`CITATION.cff`](CITATION.cff) and [`docs/citation.md`](docs/citation.md)
 - third-party baseline redistribution boundaries are summarized in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)
 - the rerun-backed public packet also discloses the exact model identifiers, resolved model snapshot revisions, environment-of-record capture, and baseline provenance used for the published run
+- the formal Linux package snapshot is tracked at [`results/environment/release_pip_freeze.txt`](results/environment/release_pip_freeze.txt) for reviewer audit of the resolved release environment
 - release limitations and validity boundaries are summarized in [`docs/threats_to_validity.md`](docs/threats_to_validity.md)
 - revision or follow-up experiment workflow notes live in [`docs/revision_experiments.md`](docs/revision_experiments.md)
 

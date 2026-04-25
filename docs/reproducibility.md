@@ -161,7 +161,11 @@ python scripts/build_suite_manifests.py
 Install `constraints-release-cu124.txt` as an additional requirements file, not
 only as a resolver constraint. It pins the recorded release anchors
 (`torch 2.6.0+cu124`, `transformers 4.57.6`, and `numpy 2.2.6`) from
-`results/environment/runtime_environment.json`. Level 3 still depends on
+`results/environment/runtime_environment.json`. The companion repository also
+ships `results/environment/release_pip_freeze.txt`, captured from the formal
+Linux release environment with `python -m pip freeze --all`, so reviewers can
+audit the resolved package set used by the published single-host run. Level 3
+still depends on
 external availability of the pinned Hugging Face model snapshots and pinned
 upstream baseline repositories; the GitHub plus Zenodo release is self-contained
 for Level 1 inspection and Level 2 regeneration from the archived raw matrix,

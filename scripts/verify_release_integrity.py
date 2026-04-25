@@ -15,6 +15,16 @@ EXPORT_IDENTITY = ROOT / "results" / "tables" / "suite_all_models_methods" / "su
 FIGURE_DIR = ROOT / "results" / "figures" / "suite_all_models_methods"
 TABLE_DIR = ROOT / "results" / "tables" / "suite_all_models_methods"
 RUN_INVENTORY = TABLE_DIR / "suite_all_models_methods_run_inventory.csv"
+REQUIRED_ENVIRONMENT_FILES = (
+    "results/environment/runtime_environment.json",
+    "results/environment/runtime_environment.md",
+    "results/environment/release_pip_freeze.txt",
+)
+REQUIRED_FREEZE_ANCHORS = (
+    "torch==2.6.0+cu124",
+    "transformers==4.57.6",
+    "numpy==2.2.6",
+)
 EXPECTED_HASHED_TABLES = (
     "method_summary.json",
     "suite_all_models_methods_method_master_leaderboard.json",
@@ -65,6 +75,10 @@ SECRET_TERMS = (
     "gh" + "p_",
     "BEGIN " + "OPENSSH PRIVATE KEY",
     "BEGIN " + "RSA PRIVATE KEY",
+    "private-cloud" + ".example.invalid",
+    "example-" + "ssh-port",
+    "example-" + "password-fragment",
+    "/private" + "/execution-root",
 )
 
 
@@ -177,6 +191,21 @@ def _check_source_counts() -> list[str]:
     return errors
 
 
+def _check_environment_files() -> list[str]:
+    errors: list[str] = []
+    for relpath in REQUIRED_ENVIRONMENT_FILES:
+        path = ROOT / relpath
+        if not path.exists():
+            errors.append(f"release environment artifact missing: {relpath}")
+    freeze_path = ROOT / "results/environment/release_pip_freeze.txt"
+    if freeze_path.exists():
+        freeze = freeze_path.read_text(encoding="utf-8", errors="ignore")
+        for anchor in REQUIRED_FREEZE_ANCHORS:
+            if anchor not in freeze:
+                errors.append(f"release pip freeze is missing anchor: {anchor}")
+    return errors
+
+
 def _scan_public_surface() -> list[str]:
     errors: list[str] = []
     for path in ROOT.rglob("*"):
@@ -213,6 +242,7 @@ def main() -> int:
     errors.extend(_check_export_hashes(identity))
     errors.extend(_check_run_inventory())
     errors.extend(_check_source_counts())
+    errors.extend(_check_environment_files())
     if not args.skip_secret_scan:
         errors.extend(_scan_public_surface())
     if errors:
