@@ -1,0 +1,42 @@
+[
+  {
+    "table_role": "repo_gate_decomposition",
+    "aggregation_view": "descriptive_method_rollup",
+    "score_semantics": "scorecard_recomputed_from_grouped_benchmark_rows",
+    "method": "STONE",
+    "gate": 0.5221,
+    "watermarked_pass_preservation": 0.5221,
+    "negative_control_fpr": 0.1461,
+    "negative_control_support_rate": 0.7355
+  },
+  {
+    "table_role": "repo_gate_decomposition",
+    "aggregation_view": "descriptive_method_rollup",
+    "score_semantics": "scorecard_recomputed_from_grouped_benchmark_rows",
+    "method": "SWEET",
+    "gate": 0.5037,
+    "watermarked_pass_preservation": 0.5037,
+    "negative_control_fpr": 0.0,
+    "negative_control_support_rate": 1.0
+  },
+  {
+    "table_role": "repo_gate_decomposition",
+    "aggregation_view": "descriptive_method_rollup",
+    "score_semantics": "scorecard_recomputed_from_grouped_benchmark_rows",
+    "method": "KGW",
+    "gate": 0.492,
+    "watermarked_pass_preservation": 0.492,
+    "negative_control_fpr": 0.0,
+    "negative_control_support_rate": 1.0
+  },
+  {
+    "table_role": "repo_gate_decomposition",
+    "aggregation_view": "descriptive_method_rollup",
+    "score_semantics": "scorecard_recomputed_from_grouped_benchmark_rows",
+    "method": "EWD",
+    "gate": 0.4877,
+    "watermarked_pass_preservation": 0.4877,
+    "negative_control_fpr": 0.0,
+    "negative_control_support_rate": 0.9993
+  }
+]

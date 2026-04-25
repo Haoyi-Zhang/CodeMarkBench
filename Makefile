@@ -25,12 +25,13 @@ SUITE_MONITOR_INDEX ?= results/matrix/$(SUITE_MATRIX_PROFILE)/matrix_index.json
 MATRIX_INDEX ?= $(SUITE_MONITOR_INDEX)
 REVIEWER_SUBSET_ARGS ?=
 
-.PHONY: help prepare-fixture prepare-data validate check-zero-legacy suite-validate suite-validate-online validate-anonymity package-release export-publish-repo install-tools suite-clean dev-suite-matrix-local dev-suite-matrix-dry-run suite-precheck suite-precheck-dry-run suite-monitor matrix-monitor export-summaries dataset-stats reviewer-browse reviewer-regenerate reviewer-subset capture-environment
+.PHONY: help prepare-fixture prepare-data validate check-zero-legacy test-smoke suite-validate suite-validate-online validate-anonymity package-release export-publish-repo install-tools suite-clean dev-suite-matrix-local dev-suite-matrix-dry-run suite-precheck suite-precheck-dry-run suite-monitor matrix-monitor export-summaries dataset-stats reviewer-browse reviewer-regenerate reviewer-subset capture-environment
 
 help:
 > @echo "Targets:"
 > @echo "  prepare-fixture Normalize the synthetic debug fixture"
 > @echo "  validate        Check one canonical runtime config for local setup issues"
+> @echo "  test-smoke      Run release integrity and lightweight no-GPU regression tests"
 > @echo "  check-zero-legacy Fail if any tracked tree content still uses the old project name"
 > @echo "  suite-validate  Check the canonical release-suite prerequisites"
 > @echo "  suite-validate-online Check the canonical release-suite rerun gate including HF access"
@@ -63,6 +64,11 @@ validate:
 
 check-zero-legacy:
 > $(PYTHON) scripts/check_zero_legacy_name.py --root .
+
+test-smoke:
+> $(PYTHON) scripts/verify_release_integrity.py
+> $(PYTHON) scripts/reviewer_workflow.py browse --summary-only
+> $(PYTHON) -m pytest tests/test_capture_environment.py tests/test_certify_suite_precheck.py tests/test_reviewer_workflow.py tests/test_suite_manifests.py -q
 
 suite-validate:
 > $(PYTHON) scripts/audit_full_matrix.py --manifest $(SUITE_MATRIX_MANIFEST) --profile $(SUITE_MATRIX_PROFILE) --strict-hf-cache --skip-provider-credentials --skip-hf-access

@@ -52,6 +52,11 @@ pytest_rs_output.txt
 *.tar.gz
 *.tar.zst
 *.zst
+*.zip
+*.7z
+.coverage
+htmlcov/
+.ipynb_checkpoints/
 .tmp_*/
 .tmp_*.json
 .tmp_*.tar

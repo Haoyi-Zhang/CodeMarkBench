@@ -890,7 +890,7 @@ def test_launch_receipt_loader_rejects_host_identity_mismatch(tmp_path: Path, mo
         "_current_environment_receipt_payload",
         lambda current_args: {
             **_stable_environment_receipt(code_snapshot_digest="post-precheck"),
-            "host_identity": {"hostname": "example-host", "fqdn": "example.invalid"},
+            "host_identity": {"hostname": "other-host", "fqdn": "other.example.invalid"},
         },
     )
 

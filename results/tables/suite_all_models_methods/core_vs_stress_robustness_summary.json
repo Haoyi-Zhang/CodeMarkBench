@@ -1,0 +1,50 @@
+[
+  {
+    "table_role": "repo_core_vs_stress_robustness_summary",
+    "aggregation_view": "descriptive_method_rollup",
+    "score_semantics": "scorecard_recomputed_from_grouped_benchmark_rows",
+    "method": "KGW",
+    "robustness": 0.445,
+    "raw_robustness_strict": 0.0,
+    "robustness_status": "supported_nonzero",
+    "robustness_support_rate": 1.0,
+    "stress_robustness": 0.4681,
+    "CodeMarkScore": 0.3497
+  },
+  {
+    "table_role": "repo_core_vs_stress_robustness_summary",
+    "aggregation_view": "descriptive_method_rollup",
+    "score_semantics": "scorecard_recomputed_from_grouped_benchmark_rows",
+    "method": "STONE",
+    "robustness": 0.3591,
+    "raw_robustness_strict": 0.0602,
+    "robustness_status": "supported_nonzero",
+    "robustness_support_rate": 1.0,
+    "stress_robustness": 0.4463,
+    "CodeMarkScore": 0.3483
+  },
+  {
+    "table_role": "repo_core_vs_stress_robustness_summary",
+    "aggregation_view": "descriptive_method_rollup",
+    "score_semantics": "scorecard_recomputed_from_grouped_benchmark_rows",
+    "method": "SWEET",
+    "robustness": 0.3438,
+    "raw_robustness_strict": 0.0,
+    "robustness_status": "supported_nonzero",
+    "robustness_support_rate": 1.0,
+    "stress_robustness": 0.4504,
+    "CodeMarkScore": 0.3875
+  },
+  {
+    "table_role": "repo_core_vs_stress_robustness_summary",
+    "aggregation_view": "descriptive_method_rollup",
+    "score_semantics": "scorecard_recomputed_from_grouped_benchmark_rows",
+    "method": "EWD",
+    "robustness": 0.2641,
+    "raw_robustness_strict": 0.0,
+    "robustness_status": "supported_nonzero",
+    "robustness_support_rate": 1.0,
+    "stress_robustness": 0.4596,
+    "CodeMarkScore": 0.3667
+  }
+]

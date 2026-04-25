@@ -1,0 +1,5 @@
+aggregation_view,gate,method,negative_control_fpr,negative_control_support_rate,score_semantics,table_role,watermarked_pass_preservation
+descriptive_method_rollup,0.5221,STONE,0.1461,0.7355,scorecard_recomputed_from_grouped_benchmark_rows,repo_gate_decomposition,0.5221
+descriptive_method_rollup,0.5037,SWEET,0.0,1.0,scorecard_recomputed_from_grouped_benchmark_rows,repo_gate_decomposition,0.5037
+descriptive_method_rollup,0.492,KGW,0.0,1.0,scorecard_recomputed_from_grouped_benchmark_rows,repo_gate_decomposition,0.492
+descriptive_method_rollup,0.4877,EWD,0.0,0.9993,scorecard_recomputed_from_grouped_benchmark_rows,repo_gate_decomposition,0.4877

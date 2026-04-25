@@ -94,6 +94,18 @@ _SUMMARY_EXPORT_IDENTITY_TABLES = (
     "suite_all_models_methods_method_master_leaderboard.json",
     "suite_all_models_methods_method_model_leaderboard.json",
     "suite_all_models_methods_model_method_functional_quality.json",
+    "per_attack_robustness_breakdown.csv",
+    "per_attack_robustness_breakdown.json",
+    "core_vs_stress_robustness_summary.csv",
+    "core_vs_stress_robustness_summary.json",
+    "robustness_factor_decomposition.csv",
+    "robustness_factor_decomposition.json",
+    "utility_factor_decomposition.csv",
+    "utility_factor_decomposition.json",
+    "generalization_axis_breakdown.csv",
+    "generalization_axis_breakdown.json",
+    "gate_decomposition.csv",
+    "gate_decomposition.json",
 )
 _PUBLICATION_FIGURE_STEMS = (
     "suite_all_models_methods_score_decomposition",
@@ -492,13 +504,15 @@ def _core_vs_stress_robustness_summary_rows(method_summary: list[dict[str, Any]]
     return rows
 
 
-def _robustness_factor_decomposition_rows(method_summary: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _robustness_factor_decomposition_rows(method_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     rows = [
         {
             "table_role": "repo_robustness_factor_decomposition",
-            "aggregation_view": "descriptive_method_rollup",
-            "score_semantics": _ROLLUP_SCORECARD_SEMANTICS,
+            "aggregation_view": row.get("aggregation_view", "suite_method_master_leaderboard"),
+            "score_semantics": row.get("score_semantics", _LEADERBOARD_SCORE_SEMANTICS),
             "method": row["method"],
+            "row_count": row.get("row_count"),
+            "attack_support_rate": row.get("attack_support_rate"),
             "robustness": row.get("robustness"),
             "raw_robustness_strict": row.get("raw_robustness_strict"),
             "robustness_status": row.get("robustness_status"),
@@ -507,19 +521,20 @@ def _robustness_factor_decomposition_rows(method_summary: list[dict[str, Any]]) 
             "attacked_detected_semantic_rate": row.get("attacked_detected_semantic_rate"),
             "attacked_pass_preservation": row.get("attacked_pass_preservation"),
         }
-        for row in method_summary
+        for row in method_rows
     ]
     rows.sort(key=lambda item: (-float(item.get("robustness") or 0.0), str(item["method"])))
     return rows
 
 
-def _utility_factor_decomposition_rows(method_summary: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _utility_factor_decomposition_rows(method_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     rows = [
         {
             "table_role": "repo_utility_factor_decomposition",
-            "aggregation_view": "descriptive_method_rollup",
-            "score_semantics": _ROLLUP_SCORECARD_SEMANTICS,
+            "aggregation_view": row.get("aggregation_view", "suite_method_master_leaderboard"),
+            "score_semantics": row.get("score_semantics", _LEADERBOARD_SCORE_SEMANTICS),
             "method": row["method"],
+            "row_count": row.get("row_count"),
             "utility": row.get("utility"),
             "raw_utility_strict": row.get("raw_utility_strict"),
             "utility_status": row.get("utility_status"),
@@ -527,8 +542,9 @@ def _utility_factor_decomposition_rows(method_summary: list[dict[str, Any]]) -> 
             "quality_score_mean": row.get("quality_score_mean"),
             "semantic_preservation_rate": row.get("semantic_preservation_rate"),
             "semantic_validation_rate": row.get("semantic_validation_rate"),
+            "declared_semantic_validation_rate": row.get("declared_semantic_validation_rate"),
         }
-        for row in method_summary
+        for row in method_rows
     ]
     rows.sort(key=lambda item: (-float(item.get("utility") or 0.0), str(item["method"])))
     return rows
@@ -1205,8 +1221,8 @@ def main() -> int:
     model_method_functional_quality = _paper_functional_quality_rows(model_method_summary)
     per_attack_robustness_breakdown = _per_attack_robustness_breakdown(by_method_rows)
     core_vs_stress_robustness_summary = _core_vs_stress_robustness_summary_rows(method_summary)
-    robustness_factor_decomposition = _robustness_factor_decomposition_rows(method_summary)
-    utility_factor_decomposition = _utility_factor_decomposition_rows(method_summary)
+    robustness_factor_decomposition = _robustness_factor_decomposition_rows(suite_method_master)
+    utility_factor_decomposition = _utility_factor_decomposition_rows(suite_method_master)
     generalization_axis_breakdown = _generalization_axis_breakdown_rows(method_summary)
     gate_decomposition = _gate_decomposition_rows(method_summary)
 

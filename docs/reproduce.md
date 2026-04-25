@@ -98,11 +98,12 @@ GPU access is required.
 For the rerun-backed public release, those identifiers are not enough by themselves. The release metadata should also pin the resolved local Hugging Face snapshot revision for each roster entry, using the cache's `refs/main -> snapshots/<revision>` mapping that was actually used during the run.
 
 To anchor the Python side of a fresh rerun to the recorded CUDA 12.4 release
-environment, install the project requirements with the release constraints:
+environment, install the project requirements with the release anchor
+requirements:
 
 ```bash
 python -m pip install --extra-index-url https://download.pytorch.org/whl/cu124 \
-  -r requirements.txt -r requirements-remote.txt -c constraints-release-cu124.txt
+  -r requirements.txt -r requirements-remote.txt -r constraints-release-cu124.txt
 ```
 
 Level 3 remains an end-to-end rerun path, so it still depends on external

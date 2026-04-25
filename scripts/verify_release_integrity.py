@@ -15,6 +15,24 @@ EXPORT_IDENTITY = ROOT / "results" / "tables" / "suite_all_models_methods" / "su
 FIGURE_DIR = ROOT / "results" / "figures" / "suite_all_models_methods"
 TABLE_DIR = ROOT / "results" / "tables" / "suite_all_models_methods"
 RUN_INVENTORY = TABLE_DIR / "suite_all_models_methods_run_inventory.csv"
+EXPECTED_HASHED_TABLES = (
+    "method_summary.json",
+    "suite_all_models_methods_method_master_leaderboard.json",
+    "suite_all_models_methods_method_model_leaderboard.json",
+    "suite_all_models_methods_model_method_functional_quality.json",
+    "per_attack_robustness_breakdown.csv",
+    "per_attack_robustness_breakdown.json",
+    "core_vs_stress_robustness_summary.csv",
+    "core_vs_stress_robustness_summary.json",
+    "robustness_factor_decomposition.csv",
+    "robustness_factor_decomposition.json",
+    "utility_factor_decomposition.csv",
+    "utility_factor_decomposition.json",
+    "generalization_axis_breakdown.csv",
+    "generalization_axis_breakdown.json",
+    "gate_decomposition.csv",
+    "gate_decomposition.json",
+)
 SOURCE_COUNTS = {
     "data/release/sources/suite_humaneval_plus_release.normalized.jsonl": 164,
     "data/release/sources/suite_mbpp_plus_release.normalized.jsonl": 378,
@@ -92,6 +110,10 @@ def _check_manifest_digest(identity: dict[str, Any]) -> list[str]:
 
 def _check_export_hashes(identity: dict[str, Any]) -> list[str]:
     errors: list[str] = []
+    required_tables = dict(identity.get("required_table_hashes", {}))
+    for name in EXPECTED_HASHED_TABLES:
+        if name not in required_tables:
+            errors.append(f"export identity is missing required table hash: {name}")
     for name, expected in sorted(dict(identity.get("required_figure_hashes", {})).items()):
         path = FIGURE_DIR / name
         if not path.exists():
@@ -100,7 +122,7 @@ def _check_export_hashes(identity: dict[str, Any]) -> list[str]:
         actual = _sha256(path)
         if actual != str(expected).strip().lower():
             errors.append(f"figure hash mismatch for {name}: expected {expected}, got {actual}")
-    for name, expected in sorted(dict(identity.get("required_table_hashes", {})).items()):
+    for name, expected in sorted(required_tables.items()):
         path = TABLE_DIR / name
         if not path.exists():
             errors.append(f"missing table artifact: {path}")

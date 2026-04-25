@@ -26,9 +26,11 @@ The exact file names in the archival record are:
 
 The raw archive is the matrix evidence layer. The sanitized bundle is a compact
 repository-style snapshot of the release surface; GitHub `main` may contain
-documentation-only release-note updates after that archived bundle was created.
+documentation, validation, or companion-surface publication updates after that
+archived bundle was created.
 For byte-identical restoration of the archived sanitized bundle, use the
-GitHub commit recorded in `raw_results_manifest.json`.
+GitHub commit recorded in `raw_results_manifest.json`
+(`3252ca48e15416eee5259967aa735c969f7eb150` for the corrected deposition).
 
 ## What Can Be Reproduced
 
@@ -148,12 +150,13 @@ sudo apt-get install -y build-essential git curl ca-certificates zstd nodejs npm
 bash scripts/remote/bootstrap_linux_gpu.sh --install --venv .venv/tosem_release
 source .venv/tosem_release/bin/activate
 python -m pip install --extra-index-url https://download.pytorch.org/whl/cu124 \
-  -r requirements.txt -r requirements-remote.txt -c constraints-release-cu124.txt
+  -r requirements.txt -r requirements-remote.txt -r constraints-release-cu124.txt
 bash scripts/fetch_runtime_upstreams.sh all
 python scripts/build_suite_manifests.py
 ```
 
-The `constraints-release-cu124.txt` file pins the recorded release anchors
+Install `constraints-release-cu124.txt` as an additional requirements file, not
+only as a resolver constraint. It pins the recorded release anchors
 (`torch 2.6.0+cu124`, `transformers 4.57.6`, and `numpy 2.2.6`) from
 `results/environment/runtime_environment.json`. Level 3 still depends on
 external availability of the pinned Hugging Face model snapshots and pinned
@@ -167,6 +170,20 @@ listed in `README.md` into `model_cache/huggingface`, or run readiness with
 token-backed probing before switching to strict cache-only execution:
 
 ```bash
+python - <<'PY'
+import os
+from huggingface_hub import snapshot_download
+from codemarkbench.suite import CANONICAL_SUITE_MODELS
+
+token = os.environ.get("HF_ACCESS_TOKEN") or None
+for spec in CANONICAL_SUITE_MODELS:
+    snapshot_download(
+        repo_id=spec.name,
+        revision=spec.revision,
+        cache_dir="model_cache/huggingface",
+        token=token,
+    )
+PY
 python scripts/check_model_access.py --token-env HF_ACCESS_TOKEN
 python scripts/audit_full_matrix.py \
   --manifest configs/matrices/suite_all_models_methods.json \

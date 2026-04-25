@@ -40,7 +40,7 @@ This repository treats the runtime methods used in the release as pinned upstrea
 - The raw archival artifact is also not a fallback source-code mirror for `STONE`, `SWEET`, or `EWD`: it carries benchmark outputs, checksums, and provenance records, while source retrieval for those baselines remains a reviewer-side pinned fetch step.
 - The bundle never includes `.git`, `paper/`, `proposal.md`, cached artifacts, or generated run outputs.
 
-## Reviewer-Facing Guarantee
+## Reviewer-Facing Contract
 
 For the active public release:
 
@@ -65,6 +65,24 @@ not intentionally alter the upstream watermark/detector algorithm logic for the
 four active runtime comparisons; reviewer-side audits should compare the pinned
 upstream commits above with the project adapter code rather than expecting the
 GitHub companion repository to vendor every upstream file.
+
+## Adapter Audit Table
+
+The release treats the four watermark baselines as pinned upstream
+implementations executed under a common benchmark contract. The table below is
+the reviewer-facing adapter map for the public release:
+
+| Method | Upstream manifest | Adapter boundary | Upstream files checked by readiness | Benchmark-controlled policy |
+| --- | --- | --- | --- | --- |
+| STONE | `third_party/STONE-watermarking.UPSTREAM.json` @ `bb5d809c0c494a219411e861f2313cca2b9fd7b4` | `codemarkbench/baselines/stone_family/official_runtime.py` loads the pinned checkout and wraps generation/detection calls. | `watermark/auto_watermark.py`, `utils/transformers_config.py` under `stone_implementation/` | pinned local HF model snapshot, shared decoding interface, benchmark prompt/execution metadata, common detector error reporting |
+| SWEET | `third_party/SWEET-watermark.UPSTREAM.json` @ `853b47eb064c180beebd383302d09491fc98a565` | The same runtime adapter loads SWEET from the pinned checkout and routes calls through the shared runner. | `sweet.py`, `watermark.py` | pinned local HF model snapshot, shared decoding interface, benchmark prompt/execution metadata, common detector error reporting |
+| EWD | `third_party/EWD.UPSTREAM.json` @ `605756acf802528a3df89d95a4661a031eafc79b` | The same runtime adapter loads EWD from the pinned checkout and routes calls through the shared runner. | `watermark.py` | pinned local HF model snapshot, shared decoding interface, benchmark prompt/execution metadata, common detector error reporting |
+| KGW | `third_party/KGW-lm-watermarking.UPSTREAM.json` @ `82922516930c02f8aa322765defdb5863d07a00e` | The same runtime adapter loads KGW from the pinned checkout and routes calls through the shared runner. | `extended_watermark_processor.py`, `alternative_prf_schemes.py`, `normalizers.py` | pinned local HF model snapshot, shared decoding interface, benchmark prompt/execution metadata, common detector error reporting |
+
+The table is not a claim that upstream projects expose identical APIs or
+licenses. It documents the parts CodeMarkBench controls uniformly and the
+minimal upstream files the readiness checks use to verify that the expected
+pinned implementation is present.
 
 ## Screening Notes
 

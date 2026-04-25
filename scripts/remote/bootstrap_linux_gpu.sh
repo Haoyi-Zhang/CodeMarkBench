@@ -130,6 +130,9 @@ if [[ $INSTALL -eq 1 ]]; then
   if [[ -f "$ROOT/requirements-remote.txt" ]]; then
     python -m pip install --no-compile -r "$ROOT/requirements-remote.txt"
   fi
+  if [[ -f "$ROOT/constraints-release-cu124.txt" ]]; then
+    python -m pip install --no-compile --extra-index-url https://download.pytorch.org/whl/cu124 -r "$ROOT/constraints-release-cu124.txt"
+  fi
   TORCH_STATUS="$(python - <<'PY'
 import json
 try:
@@ -169,7 +172,7 @@ PY
 )"
   if command -v nvidia-smi >/dev/null 2>&1; then
     if [[ "$NEEDS_TORCH_INSTALL" == "1" || "$NEEDS_CUDA_TORCH" == "1" ]]; then
-      python -m pip install --no-compile --index-url https://download.pytorch.org/whl/cu124 torch torchvision torchaudio
+      python -m pip install --no-compile --extra-index-url https://download.pytorch.org/whl/cu124 -r "$ROOT/constraints-release-cu124.txt"
     fi
     python - <<'PY'
 import torch
@@ -180,7 +183,7 @@ if not torch.cuda.is_available():
 print(f"torch {torch.__version__} with CUDA {torch.version.cuda} is ready")
 PY
   elif [[ "$NEEDS_TORCH_INSTALL" == "1" ]]; then
-    python -m pip install --no-compile torch torchvision torchaudio
+    python -m pip install --no-compile --extra-index-url https://download.pytorch.org/whl/cu124 -r "$ROOT/constraints-release-cu124.txt"
   fi
 fi
 

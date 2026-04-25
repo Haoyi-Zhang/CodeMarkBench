@@ -195,7 +195,13 @@ The repository does **not** store the rerun-backed raw `140`-run full-suite tree
 
 The publication-facing result-of-record contract is the formal single-host `suite_all_models_methods` run on one Linux execution host with `CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7`. The current canonical matrix reports `run_count = 140`, `success_count = 140`, `failed_count = 0`, and `execution_mode = single_host_canonical`. GitHub is the lightweight companion surface for code, docs, canonical inputs, environment capture, and tracked summary exports; Zenodo carries the rerun-backed raw matrix tree and sanitized release bundle.
 
-The corrected archival Zenodo record for the raw result artifact and sanitized release bundle is [`10.5281/zenodo.19740954`](https://doi.org/10.5281/zenodo.19740954). If a reviewer wants to rebuild exactly the archived sanitized bundle rather than inspect the latest documentation branch, use the GitHub commit recorded in the Zenodo manifest; later `main` commits may contain documentation-only DOI or release-note updates.
+The corrected archival Zenodo record for the raw result artifact and sanitized release bundle is [`10.5281/zenodo.19740954`](https://doi.org/10.5281/zenodo.19740954). If a reviewer wants to rebuild exactly the archived sanitized bundle rather than inspect the latest companion branch, use the GitHub commit recorded in the Zenodo manifest. For this deposited bundle, the byte-identical source commit is `3252ca48e15416eee5259967aa735c969f7eb150`:
+
+```bash
+git checkout 3252ca48e15416eee5259967aa735c969f7eb150
+```
+
+Later `main` commits may contain documentation, validation, or companion-surface publication updates; result claims should follow the matrix identity and Zenodo artifact checksums.
 
 - dataset statistics figures live under [`results/figures/dataset_statistics`](results/figures/dataset_statistics)
 - dataset statistics tables live under [`results/tables/dataset_statistics`](results/tables/dataset_statistics)
@@ -223,8 +229,9 @@ The first two levels are independent of the original execution server after the
 GitHub repository and Zenodo record are available. A fresh Level 3 rerun still
 depends on external availability of the pinned Hugging Face model snapshots and
 the pinned upstream baseline repositories; use
-[`constraints-release-cu124.txt`](constraints-release-cu124.txt) to anchor the
-recorded CUDA 12.4 Python package versions.
+[`constraints-release-cu124.txt`](constraints-release-cu124.txt) as an
+additional requirements file to anchor the recorded CUDA 12.4 Python package
+versions.
 
 Level 1 is the default reviewer path. Level 2 is the artifact-backed regeneration path described in [`docs/artifacts.md`](docs/artifacts.md). If you already have rerun-backed summary JSON/tables but not the raw matrix tree, use the redraw-only path in [`docs/reproduce.md`](docs/reproduce.md) instead of `regenerate`.
 
@@ -284,7 +291,7 @@ Full reruns belong in [`docs/remote_linux_gpu.md`](docs/remote_linux_gpu.md). Th
 
 ```bash
 python -m pip install --extra-index-url https://download.pytorch.org/whl/cu124 \
-  -r requirements.txt -r requirements-remote.txt -c constraints-release-cu124.txt
+  -r requirements.txt -r requirements-remote.txt -r constraints-release-cu124.txt
 bash scripts/fetch_runtime_upstreams.sh all
 python scripts/build_suite_manifests.py
 make suite-validate
