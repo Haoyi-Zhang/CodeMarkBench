@@ -2,6 +2,40 @@
 
 Start with **Level 1** unless you explicitly need regenerated full-run summaries or an end-to-end GPU rerun. If the original execution server is no longer available and you are rebuilding on a fresh cloud machine, use [`reproducibility.md`](reproducibility.md) as the operational checklist.
 
+## Download The Companion Repository
+
+Use current GitHub `main` for the latest reviewer-facing docs, validation
+script, summary tables, and companion-surface updates:
+
+```bash
+git clone https://github.com/Haoyi-Zhang/CodeMarkBench.git
+cd CodeMarkBench
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python scripts/verify_release_integrity.py
+python scripts/reviewer_workflow.py browse --summary-only
+```
+
+If `git` is unavailable, download the public source archive instead:
+
+```bash
+curl -L -o CodeMarkBench-main.zip \
+  https://github.com/Haoyi-Zhang/CodeMarkBench/archive/refs/heads/main.zip
+unzip CodeMarkBench-main.zip
+cd CodeMarkBench-main
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python scripts/verify_release_integrity.py
+python scripts/reviewer_workflow.py browse --summary-only
+```
+
+The GitHub companion repository is enough for Level 1 inspection. Download the
+Zenodo raw artifact only when you need Level 2 regeneration from the archived
+raw matrix tree. A full Level 3 rerun also needs a fresh GPU host, model
+snapshots, and pinned upstream baseline checkouts.
+
 ## Excluded White-Box Methods
 
 The reproduction workflow mirrors the active canonical benchmark only:

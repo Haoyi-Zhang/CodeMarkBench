@@ -234,6 +234,23 @@ the pinned upstream baseline repositories; use
 additional requirements file to anchor the recorded CUDA 12.4 Python package
 versions.
 
+For a fresh reviewer clone, the shortest non-GPU path is:
+
+```bash
+git clone https://github.com/Haoyi-Zhang/CodeMarkBench.git
+cd CodeMarkBench
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python scripts/verify_release_integrity.py
+python scripts/reviewer_workflow.py browse --summary-only
+```
+
+The Zenodo raw matrix is needed only for Level 2 regeneration. Download and
+verify it with `SHA256SUMS.txt` as shown in [`docs/reproduce.md`](docs/reproduce.md)
+and [`docs/artifacts.md`](docs/artifacts.md), then extract it from the repository
+root so that `results/matrix/suite_all_models_methods/matrix_index.json` exists.
+
 Level 1 is the default reviewer path. Level 2 is the artifact-backed regeneration path described in [`docs/artifacts.md`](docs/artifacts.md). If you already have rerun-backed summary JSON/tables but not the raw matrix tree, use the redraw-only path in [`docs/reproduce.md`](docs/reproduce.md) instead of `regenerate`.
 
 ## Reviewer Quick Start
