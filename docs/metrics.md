@@ -101,7 +101,11 @@ These remain part of the benchmark, but they are released as a **stress surface*
 \right)
 \]
 
-This part is not softened. If a method is not trustworthy or functionally usable, the headline should be heavily penalized.
+This part is not softened. It is a relative pass-preservation gate with a
+negative-control penalty, not a standalone absolute usability certificate. If a
+method does not preserve executable behavior relative to its own clean
+generation baseline, the headline should be heavily penalized; absolute clean
+and watermarked pass rates remain in the functional-quality tables.
 
 ## Public Robustness
 
@@ -154,6 +158,11 @@ This design means:
 - coverage gaps stay visible through `attack_support_rate` and `robustness_support_rate`
 - but one special `0` no longer forces the public aggregate to `0` when other supported attacks remain non-zero
 
+In the suite-level master leaderboard, this aggregate is first computed within
+each source group and then source-balanced. Therefore the master `robustness`
+value is not expected to equal a naive arithmetic mean over the descriptive
+per-attack rows.
+
 The two support fields intentionally have different denominators:
 
 - `robustness_support_rate` is method-level core-attack coverage
@@ -192,6 +201,10 @@ Stress attacks are aggregated separately:
 \]
 
 Stress-attack coverage remains visible through per-attack support rates and the table-first breakdowns, and `stress_robustness` is descriptive only. It does **not** enter `CodeMarkScore`.
+The `per_attack_robustness_breakdown` table is an attack-level descriptive
+sidecar from the master score coverage; use
+`core_vs_stress_robustness_summary` for the source-balanced master robustness
+value that enters the headline path.
 
 ## Public Utility
 
@@ -425,6 +438,15 @@ The release-facing export contract explicitly expects table-first evidence for:
 - `gate_decomposition`
 
 These should be read before the headline score.
+Rows with `aggregation_view = suite_method_master_leaderboard` use the same
+source-balanced master-leaderboard contract as the method table. Rows tagged as
+descriptive attack breakdowns expose attack-level factors and support rates,
+but they are not a recipe for reconstructing the source-balanced headline by a
+single unweighted mean.
+In `gate_decomposition.*`, `gate`, `watermarked_pass_preservation`, and
+negative-control fields follow the master-leaderboard contract; the
+`descriptive_*_test_pass_rate` columns are absolute method-rollup context fields
+included only to keep the relative gate interpretable.
 
 ## Diagnostic-Only Scale Consistency
 

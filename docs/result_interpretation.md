@@ -97,11 +97,23 @@ that every generated program is optimal, and it should be checked alongside
 
 For paper wording, avoid reducing the release to phrases such as "high utility"
 or "strong generalization" without the accompanying strict diagnostics. The
-public utility scalar is an arithmetic summary over supported factors; low
-semantic-preservation or pass-preservation components remain visible in the
-functional-quality and utility-factor tables. Likewise, headline
+public utility scalar is a support-aware arithmetic summary over supported
+factors; low semantic-preservation or pass-preservation components remain
+visible in the functional-quality and utility-factor tables. Likewise, headline
 generalization is a released cross-slice stability summary under supported
 axes, while `raw_generalization_strict` preserves the fail-closed diagnostic.
+`Gate` should be described as a relative pass-preservation gate with a
+negative-control penalty; it must be interpreted beside absolute clean and
+watermarked pass rates, not as an absolute usability certificate.
+In `gate_decomposition.*`, the `descriptive_*_test_pass_rate` columns are
+absolute method-rollup context fields from the descriptive method summary, while
+`gate` and `watermarked_pass_preservation` remain the source-balanced
+master-leaderboard values used by the public scorecard.
+
+Some frozen crafted-source prompt strings still contain the legacy phrase
+`expert-constructed` because changing those strings after execution would change
+the result-of-record input text. Treat that phrase as legacy benchmark wording,
+not as a claim that an external expert panel authored or certified the tasks.
 
 ## Row-Count Semantics
 

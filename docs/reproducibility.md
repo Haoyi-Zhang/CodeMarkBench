@@ -31,6 +31,9 @@ archived bundle was created.
 For byte-identical restoration of the archived sanitized bundle, use the
 GitHub commit recorded in `raw_results_manifest.json`
 (`3252ca48e15416eee5259967aa735c969f7eb150` for the corrected deposition).
+For the latest reviewer-facing companion tables, validation script, and
+documentation updates, use current GitHub `main`; those later
+companion-surface updates do not change the Zenodo raw matrix identity.
 
 ## What Can Be Reproduced
 

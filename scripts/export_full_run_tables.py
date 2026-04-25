@@ -448,20 +448,30 @@ def _paper_utility_robustness_rows(leaderboard: list[dict[str, Any]]) -> list[di
     return rows
 
 
-def _per_attack_robustness_breakdown(by_method_rows: Mapping[str, list[BenchmarkRow]]) -> list[dict[str, Any]]:
+def _score_coverage_payload(row: Mapping[str, Any]) -> Mapping[str, Any]:
+    payload = row.get("score_coverage")
+    return payload if isinstance(payload, Mapping) else {}
+
+
+def _per_attack_robustness_breakdown(method_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    for method, benchmark_rows in by_method_rows.items():
-        scorecard = scorecard_for_rows(benchmark_rows, balance_by_source_group=True)
-        attack_breakdown = dict(scorecard.get("score_coverage", {}).get("attack_breakdown", {}))
+    for row in method_rows:
+        method = row["method"]
+        coverage = _score_coverage_payload(row)
+        attack_breakdown = dict(coverage.get("attack_breakdown", {}))
         for attack_name, payload in attack_breakdown.items():
             rows.append(
                 {
                     "table_role": "repo_attack_robustness_breakdown",
-                    "aggregation_view": "method_attack_breakdown",
-                    "score_semantics": _ROLLUP_SCORECARD_SEMANTICS,
+                    "aggregation_view": "suite_method_master_attack_breakdown_descriptive",
+                    "score_semantics": "descriptive_unbalanced_attack_breakdown_from_master_score_coverage",
                     "method": method,
                     "attack": attack_name,
                     "attack_tier": str(payload.get("attack_tier", attack_tier(attack_name))),
+                    "source_balanced_headline_robustness": row.get("robustness"),
+                    "source_balanced_headline_raw_robustness_strict": row.get("raw_robustness_strict"),
+                    "source_balanced_headline_support_rate": row.get("robustness_support_rate"),
+                    "reconstructs_source_balanced_headline": False,
                     "attack_support_rate": float(payload.get("attack_support_rate", 0.0) or 0.0),
                     "attack_robustness": _nullable_float(payload.get("attack_robustness")),
                     "raw_attack_robustness_strict": _nullable_float(payload.get("raw_attack_robustness_strict")),
@@ -486,13 +496,15 @@ def _per_attack_robustness_breakdown(by_method_rows: Mapping[str, list[Benchmark
     return rows
 
 
-def _core_vs_stress_robustness_summary_rows(method_summary: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _core_vs_stress_robustness_summary_rows(method_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     rows = [
         {
             "table_role": "repo_core_vs_stress_robustness_summary",
-            "aggregation_view": "descriptive_method_rollup",
-            "score_semantics": _ROLLUP_SCORECARD_SEMANTICS,
+            "aggregation_view": row.get("aggregation_view", "suite_method_master_leaderboard"),
+            "score_semantics": row.get("score_semantics", _LEADERBOARD_SCORE_SEMANTICS),
             "method": row["method"],
+            "row_count": row.get("row_count"),
+            "attack_support_rate": row.get("attack_support_rate"),
             "robustness": row.get("robustness"),
             "raw_robustness_strict": row.get("raw_robustness_strict"),
             "robustness_status": row.get("robustness_status"),
@@ -500,7 +512,7 @@ def _core_vs_stress_robustness_summary_rows(method_summary: list[dict[str, Any]]
             "stress_robustness": row.get("stress_robustness"),
             HEADLINE_SCORE_FIELD: row.get(HEADLINE_SCORE_FIELD),
         }
-        for row in method_summary
+        for row in method_rows
     ]
     rows.sort(key=lambda item: (-float(item.get("robustness") or 0.0), str(item["method"])))
     return rows
@@ -552,13 +564,14 @@ def _utility_factor_decomposition_rows(method_rows: list[dict[str, Any]]) -> lis
     return rows
 
 
-def _generalization_axis_breakdown_rows(method_summary: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _generalization_axis_breakdown_rows(method_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     rows = [
         {
             "table_role": "repo_generalization_axis_breakdown",
-            "aggregation_view": "descriptive_method_rollup",
-            "score_semantics": _ROLLUP_SCORECARD_SEMANTICS,
+            "aggregation_view": row.get("aggregation_view", "suite_method_master_leaderboard"),
+            "score_semantics": row.get("score_semantics", _LEADERBOARD_SCORE_SEMANTICS),
             "method": row["method"],
+            "row_count": row.get("row_count"),
             "generalization": row.get("generalization"),
             "raw_generalization_strict": row.get("raw_generalization_strict"),
             "headline_generalization": row.get("headline_generalization"),
@@ -569,25 +582,37 @@ def _generalization_axis_breakdown_rows(method_summary: list[dict[str, Any]]) ->
             "language_stability": row.get("language_stability"),
             "cross_family_transfer": row.get("cross_family_transfer"),
         }
-        for row in method_summary
+        for row in method_rows
     ]
     rows.sort(key=lambda item: (-float(item.get("headline_generalization") or 0.0), str(item["method"])))
     return rows
 
 
-def _gate_decomposition_rows(method_summary: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _gate_decomposition_rows(
+    method_rows: list[dict[str, Any]],
+    *,
+    descriptive_method_rows: Mapping[str, dict[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
+    descriptive_method_rows = descriptive_method_rows or {}
     rows = [
         {
             "table_role": "repo_gate_decomposition",
-            "aggregation_view": "descriptive_method_rollup",
-            "score_semantics": _ROLLUP_SCORECARD_SEMANTICS,
+            "aggregation_view": row.get("aggregation_view", "suite_method_master_leaderboard"),
+            "score_semantics": row.get("score_semantics", _LEADERBOARD_SCORE_SEMANTICS),
             "method": row["method"],
+            "row_count": row.get("row_count"),
             "gate": row.get("gate"),
             "watermarked_pass_preservation": row.get("watermarked_pass_preservation"),
             "negative_control_fpr": row.get("negative_control_fpr"),
+            "descriptive_clean_test_pass_rate": descriptive_method_rows.get(str(row["method"]), {}).get(
+                "clean_test_pass_rate"
+            ),
+            "descriptive_watermarked_test_pass_rate": descriptive_method_rows.get(str(row["method"]), {}).get(
+                "watermarked_test_pass_rate"
+            ),
             "negative_control_support_rate": row.get("negative_control_support_rate"),
         }
-        for row in method_summary
+        for row in method_rows
     ]
     rows.sort(key=lambda item: (-float(item.get("gate") or 0.0), str(item["method"])))
     return rows
@@ -1221,12 +1246,16 @@ def main() -> int:
     )
     utility_robustness_summary = _paper_utility_robustness_rows(suite_method_master)
     model_method_functional_quality = _paper_functional_quality_rows(model_method_summary)
-    per_attack_robustness_breakdown = _per_attack_robustness_breakdown(by_method_rows)
-    core_vs_stress_robustness_summary = _core_vs_stress_robustness_summary_rows(method_summary)
+    per_attack_robustness_breakdown = _per_attack_robustness_breakdown(suite_method_master)
+    core_vs_stress_robustness_summary = _core_vs_stress_robustness_summary_rows(suite_method_master)
     robustness_factor_decomposition = _robustness_factor_decomposition_rows(suite_method_master)
     utility_factor_decomposition = _utility_factor_decomposition_rows(suite_method_master)
-    generalization_axis_breakdown = _generalization_axis_breakdown_rows(method_summary)
-    gate_decomposition = _gate_decomposition_rows(method_summary)
+    generalization_axis_breakdown = _generalization_axis_breakdown_rows(suite_method_master)
+    descriptive_method_rows = {str(row.get("method", "")).strip(): row for row in method_summary}
+    gate_decomposition = _gate_decomposition_rows(
+        suite_method_master,
+        descriptive_method_rows=descriptive_method_rows,
+    )
 
     _write_table(output_dir, "method_summary", method_summary)
     _write_table(output_dir, "model_summary", model_summary)

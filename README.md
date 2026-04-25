@@ -158,7 +158,7 @@ For generalization, the released diagnostics and the availability tokens use the
 
 `CodeMarkScore` is a secondary summary metric, not a replacement for the submetrics or exact-value tables. The release-facing scorecard intentionally separates strict/raw diagnostics from public summary scalars. Public `robustness` is computed from the reviewer-safe core attack tier only; stress attacks are exported separately through `stress_robustness` and table-first breakdowns. Public `utility` and `generalization` are support-aware summaries, while `raw_robustness_strict`, `raw_utility_strict`, `raw_core_score_strict`, `raw_generalization_strict`, and `raw_composite_strict` preserve coverage-explicit diagnostic views; unsupported top-level strict generalization and the strict composite remain fail-closed.
 
-The released results should be read as failure-revealing benchmark evidence: current methods can retain nontrivial detection and utility while still exposing limited robustness under reviewer-safe transformations. [`docs/result_interpretation.md`](docs/result_interpretation.md) gives the reviewer-facing guide for reading low robustness values, strict zero diagnostics, constant support fields, and table-first evidence without mistaking them for failed runs.
+The released results should be read as failure-revealing benchmark evidence: current methods can retain nontrivial detection and utility while still exposing limited robustness under reviewer-safe transformations. Some frozen crafted-source prompt strings still contain the legacy phrase `expert-constructed` because they are part of the executed result-of-record input text. That phrase is not an external expert-panel credential claim; the crafted slices should be described as project-authored, template-assisted, manually reviewed curated benchmark content. [`docs/result_interpretation.md`](docs/result_interpretation.md) gives the reviewer-facing guide for reading low robustness values, strict zero diagnostics, constant support fields, and table-first evidence without mistaking them for failed runs.
 
 The public headline score is:
 
@@ -201,7 +201,7 @@ The corrected archival Zenodo record for the raw result artifact and sanitized r
 git checkout 3252ca48e15416eee5259967aa735c969f7eb150
 ```
 
-Later `main` commits may contain documentation, validation, or companion-surface publication updates; result claims should follow the matrix identity and Zenodo artifact checksums.
+Later `main` commits may contain documentation, validation, or companion-surface publication updates; result claims should follow the matrix identity and Zenodo artifact checksums. Use current GitHub `main` for the latest reviewer-facing companion tables and checks, and use the archived commit above only for byte-identical restoration of the deposited sanitized bundle.
 
 - dataset statistics figures live under [`results/figures/dataset_statistics`](results/figures/dataset_statistics)
 - dataset statistics tables live under [`results/tables/dataset_statistics`](results/tables/dataset_statistics)
