@@ -20,7 +20,7 @@ and the sanitized release bundle.
 The exact file names in the archival record are:
 
 - `CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst`
-- `CodeMarkBench-sanitized-release-bundle-20260424T163046.tar.zst`
+- `CodeMarkBench-sanitized-release-bundle-20260425T181337.tar.zst`
 - `raw_results_manifest.json`
 - `SHA256SUMS.txt`
 

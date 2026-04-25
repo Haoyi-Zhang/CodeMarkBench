@@ -58,7 +58,7 @@ Published Zenodo files for the result-of-record release:
 | File | Role | SHA-256 |
 | --- | --- | --- |
 | `CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst` | Raw `140/140` matrix evidence and per-run reports. | `29d0c20a5f5e99cc24d61e7479e4d788565161c78c3660e560412eb502d38a2d` |
-| `CodeMarkBench-sanitized-release-bundle-20260424T163046.tar.zst` | Compact release-surface snapshot for archival recovery. | `44d4f05511d82e69545b7f2403f67fbdd45f6585a5c337f301c063614b8f8ed1` |
+| `CodeMarkBench-sanitized-release-bundle-20260425T181337.tar.zst` | Compact release-surface snapshot for archival recovery. | `471c14eaa2d3f3fddbbf197715ee75549540639b95f13c9d1456875a98f78111` |
 | `raw_results_manifest.json` | Machine-readable artifact identity and GitHub companion commit. | recorded in `SHA256SUMS.txt` |
 | `SHA256SUMS.txt` | Download verification file. | archived with the Zenodo record |
 
