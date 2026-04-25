@@ -98,7 +98,7 @@ def test_run_full_matrix_dry_run_writes_canonical_identity_metadata(tmp_path: Pa
         run_full_matrix.capture_environment,
         "_collect",
         lambda: {
-            "host": {"hostname": "execution-host", "fqdn": "execution-host.example"},
+            "host": {"hostname": "example-host", "fqdn": "example.invalid"},
             "gpu": {
                 "count": 8,
                 "visible_gpu_count": 8,
@@ -175,7 +175,7 @@ def test_run_full_matrix_uses_repo_relative_manifest_identity_for_in_repo_manife
         run_full_matrix.capture_environment,
         "_collect",
         lambda: {
-            "host": {"hostname": "execution-host", "fqdn": "execution-host.example"},
+            "host": {"hostname": "example-host", "fqdn": "example.invalid"},
             "gpu": {"count": 8, "visible_gpu_count": 8, "cuda_visible_devices": "0,1,2,3,4,5,6,7", "devices": []},
             "platform": {"system": "Linux", "release": "6.8.0", "version": "#1 SMP", "machine": "x86_64", "processor": "Xeon"},
             "python": {"executable": "/venv/bin/python", "version": "3.10.12"},

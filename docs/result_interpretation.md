@@ -95,6 +95,29 @@ semantic-preservation, and semantic-validation factors. It does not certify
 that every generated program is optimal, and it should be checked alongside
 `raw_utility_strict`, functional-quality tables, and timing tables.
 
+For paper wording, avoid reducing the release to phrases such as "high utility"
+or "strong generalization" without the accompanying strict diagnostics. The
+public utility scalar is an arithmetic summary over supported factors; low
+semantic-preservation or pass-preservation components remain visible in the
+functional-quality and utility-factor tables. Likewise, headline
+generalization is a released cross-slice stability summary under supported
+axes, while `raw_generalization_strict` preserves the fail-closed diagnostic.
+
+## Row-Count Semantics
+
+Three row counts appear in the release and should not be conflated:
+
+- release-source tasks: the seven source JSONL files contain the canonical
+  task inputs (`164`, `378`, `200`, `200`, `240`, `240`, and `240` rows)
+- per-run report rows: a run expands those source tasks through benchmark,
+  language, watermark, attack, and evaluation records
+- scored rows: leaderboard exports may remove duplicate or non-scoring rows
+  before grouped scorecard evaluation
+
+The exported `raw_row_count`, `row_count`, and `duplicate_rows_removed` columns
+document that transition. They are bookkeeping fields, not evidence that the
+canonical `5 x 4 x 7 = 140` run matrix changed.
+
 ## Repository and Artifact Split
 
 GitHub is the lightweight companion surface: code, documentation, canonical

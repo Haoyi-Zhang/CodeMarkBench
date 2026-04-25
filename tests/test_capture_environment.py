@@ -33,7 +33,7 @@ def test_run_normalizes_missing_command_error_to_english() -> None:
 def test_render_markdown_includes_normalized_tool_error() -> None:
     payload = {
         "label": "local",
-        "host": {"hostname": "execution-host", "fqdn": "execution-host.example"},
+        "host": {"hostname": "example-host", "fqdn": "example.invalid"},
         "platform": {"system": "Windows", "release": "11", "version": "10.0", "machine": "AMD64"},
         "python": {"executable": "python", "version": "3.14"},
         "packages": {"torch": "2.10.0+cpu", "transformers": "5.2.0", "numpy": "2.4.4", "pandas": "3.0.1"},
@@ -57,8 +57,8 @@ def test_render_markdown_includes_normalized_tool_error() -> None:
         },
     }
     rendered = capture_environment._render_markdown(payload)
-    assert "- Hostname: `js3`" in rendered
-    assert "- FQDN: `execution-host.example`" in rendered
+    assert "- Hostname: `example-host`" in rendered
+    assert "- FQDN: `example.invalid`" in rendered
     assert "- Execution mode: `single_host_canonical`" in rendered
     assert "- GPU count (physical): `0`" in rendered
     assert "- GPU count (visible execution class): `0`" in rendered

@@ -1028,6 +1028,25 @@ def _filter_run_items(
     model_filter = {item.strip() for item in models if item.strip()}
     method_filter = {item.strip() for item in methods if item.strip()}
     source_filter = {item.strip() for item in sources if item.strip()}
+    available_models = {str(item.get("model", "")).strip() for item in runs if str(item.get("model", "")).strip()}
+    available_methods = {str(item.get("method", "")).strip() for item in runs if str(item.get("method", "")).strip()}
+    available_sources = {str(item.get("source_slug", "")).strip() for item in runs if str(item.get("source_slug", "")).strip()}
+    unknown_models = sorted(model_filter - available_models)
+    unknown_methods = sorted(method_filter - available_methods)
+    unknown_sources = sorted(source_filter - available_sources)
+    if unknown_models or unknown_methods or unknown_sources:
+        details = {
+            "unknown_models": unknown_models,
+            "unknown_methods": unknown_methods,
+            "unknown_sources": unknown_sources,
+            "available_models": sorted(available_models),
+            "available_methods": sorted(available_methods),
+            "available_sources": sorted(available_sources),
+        }
+        raise ValueError(
+            "subset filters reference values outside the canonical release roster: "
+            + json.dumps(details, indent=2, sort_keys=True)
+        )
     filtered: list[dict[str, Any]] = []
     for item in runs:
         if model_filter and str(item.get("model", "")).strip() not in model_filter:
@@ -1213,7 +1232,10 @@ def main() -> int:
             sources=_parse_csv_values(args.sources),
         )
         if not selected_runs:
-            raise ValueError("the requested subset filters produced an empty manifest")
+            raise ValueError(
+                "the requested subset filters produced an empty manifest inside the canonical release roster; "
+                "check the requested model/method/source combination or use a custom manifest workflow for non-canonical experiments"
+            )
         payload = _subset_manifest_payload(
             profile=profile_name,
             description=(

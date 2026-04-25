@@ -52,11 +52,17 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 python scripts/reviewer_workflow.py browse
+python scripts/verify_release_integrity.py
 ```
 
 This path is enough to inspect the benchmark, result interpretation, exported
 tables, and retained publication-style figures without downloading model weights
 or raw matrix files.
+`verify_release_integrity.py` also checks the canonical manifest digest,
+summary artifact hashes, run inventory, release-source row counts, and a small
+public-surface token-marker scan. On a Windows working tree with CRLF line
+endings, it reports the canonical manifest as valid if the LF-normalized bytes
+match the published digest and warns about the line-ending difference.
 
 Primary review files:
 

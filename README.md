@@ -211,6 +211,7 @@ The corrected archival Zenodo record for the raw result artifact and sanitized r
 - third-party baseline redistribution boundaries are summarized in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)
 - the rerun-backed public packet also discloses the exact model identifiers, resolved model snapshot revisions, environment-of-record capture, and baseline provenance used for the published run
 - release limitations and validity boundaries are summarized in [`docs/threats_to_validity.md`](docs/threats_to_validity.md)
+- revision or follow-up experiment workflow notes live in [`docs/revision_experiments.md`](docs/revision_experiments.md)
 
 Use [`docs/reproduce.md`](docs/reproduce.md) for the canonical three-level reviewer path, and [`docs/reproducibility.md`](docs/reproducibility.md) for the fresh-cloud recovery path after the original execution server is no longer available:
 
@@ -282,7 +283,8 @@ Bare `regenerate` commands target the canonical `configs/matrices/suite_all_mode
 Full reruns belong in [`docs/remote_linux_gpu.md`](docs/remote_linux_gpu.md). The formal public rerun path is the single-host 8-GPU workflow:
 
 ```bash
-pip install -r requirements.txt -r requirements-remote.txt
+python -m pip install --extra-index-url https://download.pytorch.org/whl/cu124 \
+  -r requirements.txt -r requirements-remote.txt -c constraints-release-cu124.txt
 bash scripts/fetch_runtime_upstreams.sh all
 python scripts/build_suite_manifests.py
 make suite-validate
@@ -302,6 +304,7 @@ The canonical suite manifests should report:
 - `model_invocation_smoke = 112`
 
 Use [`docs/remote_linux_gpu.md`](docs/remote_linux_gpu.md) for the full clean-output, monitoring, figure/table export, and release workflow. Reviewers who only need the shipped summary assets should stop at Level 1 in [`docs/reproduce.md`](docs/reproduce.md); they do not need to rerun models.
+Use [`scripts/verify_release_integrity.py`](scripts/verify_release_integrity.py) as a lightweight fresh-clone check for the canonical manifest digest, summary hashes, run inventory, source counts, and token-marker scan.
 
 ## Optional Two-Host Sharded Reproduction / Throughput Mode
 

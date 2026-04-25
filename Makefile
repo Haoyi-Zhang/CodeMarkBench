@@ -2,6 +2,8 @@
 ifndef PYTHON
 ifneq ("$(wildcard .venv/bin/python)","")
 PYTHON := .venv/bin/python
+else ifneq ("$(wildcard .venv/Scripts/python.exe)","")
+PYTHON := .venv/Scripts/python.exe
 else ifdef VIRTUAL_ENV
 PYTHON := $(VIRTUAL_ENV)/bin/python
 else

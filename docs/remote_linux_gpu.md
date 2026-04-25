@@ -45,6 +45,8 @@ sudo apt-get update
 sudo apt-get install -y build-essential git curl ca-certificates zstd nodejs npm openjdk-21-jdk golang-go
 bash scripts/remote/bootstrap_linux_gpu.sh --install --venv .venv/tosem_release
 source .venv/tosem_release/bin/activate
+python -m pip install --extra-index-url https://download.pytorch.org/whl/cu124 \
+  -r requirements.txt -r requirements-remote.txt -c constraints-release-cu124.txt
 bash scripts/fetch_runtime_upstreams.sh all
 python scripts/build_suite_manifests.py
 python scripts/audit_benchmarks.py --profile suite
@@ -58,6 +60,19 @@ available under the configured local model cache. On a fresh host, first fill
 or validate access to that cache with `python scripts/check_model_access.py
 --token-env HF_ACCESS_TOKEN` and an audit pass using `--probe-hf-access`; then
 rerun the strict-cache audit before preflight.
+
+The release constraints anchor the recorded Python package versions for the
+formal CUDA 12.4 environment. `bootstrap_linux_gpu.sh` verifies that a
+CUDA-enabled PyTorch build is usable on the host, while the explicit
+constraints install makes the fresh-host package set match the archived
+environment capture more closely.
+
+For model-cache preparation, use the exact model identifiers and snapshot
+revisions listed in the root `README.md` and in
+`results/tables/suite_all_models_methods/suite_all_models_methods_export_identity.json`.
+The repository does not redistribute Hugging Face weights; a full rerun needs
+those snapshots available under `model_cache/huggingface` or another configured
+local cache before the strict-cache gate is run.
 
 `run_preflight.sh --formal-full-only` validates:
 

@@ -17,6 +17,19 @@ dependencies = [
   "matplotlib>=3.8",
 ]
 
+[project.optional-dependencies]
+test = [
+  "pytest>=8.0",
+]
+remote = [
+  "transformers>=4.46,<5",
+  "safetensors>=0.4",
+  "sentencepiece>=0.2",
+  "Pillow>=10",
+  "scipy>=1.12",
+  "nltk>=3.9",
+]
+
 [project.urls]
 Homepage = "https://github.com/Haoyi-Zhang/CodeMarkBench"
 Repository = "https://github.com/Haoyi-Zhang/CodeMarkBench"

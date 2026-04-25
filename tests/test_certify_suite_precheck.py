@@ -25,7 +25,7 @@ def _stable_environment_receipt(*, code_snapshot_digest: str = "snapshot-digest"
         "visible_gpu_count": 0,
         "preflight_gpu_slots": 0,
         "code_snapshot_digest": code_snapshot_digest,
-        "host_identity": {"hostname": "execution-host", "fqdn": "execution-host.example"},
+        "host_identity": {"hostname": "example-host", "fqdn": "example.invalid"},
     }
 
 
@@ -38,7 +38,7 @@ def _stable_launch_environment_receipt(*, code_snapshot_digest: str = "snapshot-
         "visible_gpu_count": 0,
         "preflight_gpu_slots": 0,
         "code_snapshot_digest": code_snapshot_digest,
-        "host_identity": {"hostname": "execution-host", "fqdn": "execution-host.example"},
+        "host_identity": {"hostname": "example-host", "fqdn": "example.invalid"},
     }
 
 
@@ -333,7 +333,7 @@ def test_precheck_reuses_matching_preflight_receipt(tmp_path: Path, monkeypatch)
                     "visible_gpu_count": 0,
                     "preflight_gpu_slots": 0,
                     "code_snapshot_digest": "snapshot-digest",
-                    "host_identity": {"hostname": "execution-host", "fqdn": "execution-host.example"},
+                    "host_identity": {"hostname": "example-host", "fqdn": "example.invalid"},
                 },
             }
         ),
@@ -433,7 +433,7 @@ def test_precheck_rejects_receipt_when_manifest_digest_changes(tmp_path: Path) -
                     "visible_gpu_count": 0,
                     "preflight_gpu_slots": 0,
                     "code_snapshot_digest": "snapshot-digest",
-                    "host_identity": {"hostname": "execution-host", "fqdn": "execution-host.example"},
+                    "host_identity": {"hostname": "example-host", "fqdn": "example.invalid"},
                 },
             }
         ),
@@ -487,7 +487,7 @@ def test_precheck_rejects_receipt_when_environment_fingerprint_changes(tmp_path:
                     "visible_gpu_count": 0,
                     "preflight_gpu_slots": 0,
                     "code_snapshot_digest": "snapshot-digest",
-                    "host_identity": {"hostname": "execution-host", "fqdn": "execution-host.example"},
+                    "host_identity": {"hostname": "example-host", "fqdn": "example.invalid"},
                 },
             }
         ),
@@ -550,7 +550,7 @@ def test_precheck_rejects_receipt_when_cuda_visible_devices_change(tmp_path: Pat
                     "visible_gpu_count": 2,
                     "preflight_gpu_slots": 2,
                     "code_snapshot_digest": "snapshot-digest",
-                    "host_identity": {"hostname": "execution-host", "fqdn": "execution-host.example"},
+                    "host_identity": {"hostname": "example-host", "fqdn": "example.invalid"},
                 },
             }
         ),
@@ -733,7 +733,7 @@ def test_precheck_launch_receipt_excludes_non_contract_host_surface_but_keeps_ho
     assert launch_receipt["environment_receipt"] == _stable_launch_environment_receipt(code_snapshot_digest="post-precheck")
     assert launch_receipt["runtime_checkout_receipt"] == _stable_runtime_checkout_receipt()
     assert "environment_fingerprint" not in launch_receipt["environment_receipt"]
-    assert launch_receipt["environment_receipt"]["host_identity"] == {"hostname": "execution-host", "fqdn": "execution-host.example"}
+    assert launch_receipt["environment_receipt"]["host_identity"] == {"hostname": "example-host", "fqdn": "example.invalid"}
 
 
 def test_launch_receipt_loader_accepts_matching_gate(tmp_path: Path, monkeypatch) -> None:
@@ -890,7 +890,7 @@ def test_launch_receipt_loader_rejects_host_identity_mismatch(tmp_path: Path, mo
         "_current_environment_receipt_payload",
         lambda current_args: {
             **_stable_environment_receipt(code_snapshot_digest="post-precheck"),
-            "host_identity": {"hostname": "js4", "fqdn": "js4.blockelite.cn"},
+            "host_identity": {"hostname": "example-host", "fqdn": "example.invalid"},
         },
     )
 
