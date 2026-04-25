@@ -76,6 +76,8 @@ sudo apt-get update
 sudo apt-get install -y zstd ca-certificates curl
 curl -L -o CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst \
   'https://zenodo.org/records/19740954/files/CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst?download=1'
+curl -L -o CodeMarkBench-sanitized-release-bundle-20260425T181337.tar.zst \
+  'https://zenodo.org/records/19740954/files/CodeMarkBench-sanitized-release-bundle-20260425T181337.tar.zst?download=1'
 curl -L -o raw_results_manifest.json \
   'https://zenodo.org/records/19740954/files/raw_results_manifest.json?download=1'
 curl -L -o SHA256SUMS.txt \
@@ -139,9 +141,19 @@ sudo apt-get update
 sudo apt-get install -y build-essential git curl ca-certificates zstd nodejs npm openjdk-21-jdk golang-go
 bash scripts/remote/bootstrap_linux_gpu.sh --install --venv .venv/tosem_release
 source .venv/tosem_release/bin/activate
+python -m pip install --extra-index-url https://download.pytorch.org/whl/cu124 \
+  -r requirements.txt -r requirements-remote.txt -c constraints-release-cu124.txt
 bash scripts/fetch_runtime_upstreams.sh all
 python scripts/build_suite_manifests.py
 ```
+
+The `constraints-release-cu124.txt` file pins the recorded release anchors
+(`torch 2.6.0+cu124`, `transformers 4.57.6`, and `numpy 2.2.6`) from
+`results/environment/runtime_environment.json`. Level 3 still depends on
+external availability of the pinned Hugging Face model snapshots and pinned
+upstream baseline repositories; the GitHub plus Zenodo release is self-contained
+for Level 1 inspection and Level 2 regeneration from the archived raw matrix,
+not for redistributing model weights or all third-party baseline source trees.
 
 Model-cache readiness is explicit. The release configs use local snapshot
 loading for the formal run, so either pre-download the exact model revisions

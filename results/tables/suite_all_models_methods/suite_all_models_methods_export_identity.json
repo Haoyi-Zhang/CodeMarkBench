@@ -54,11 +54,11 @@
   "required_figure_hashes": {
     "suite_all_models_methods_detection_vs_utility.csv": "fbed851a493e38de76d5ee449ce5fb1685d4a3bc7edb306889ada9290c60fc32",
     "suite_all_models_methods_detection_vs_utility.json": "a996524ef47c9762b4cf21c16ec191805fd23a6ed12f210facf8fc580a3d1a58",
-    "suite_all_models_methods_detection_vs_utility.pdf": "2a7506da41cffecb120960f45e14f70c2761bdde56d0bcf9e3385e5ff56c6ddd",
+    "suite_all_models_methods_detection_vs_utility.pdf": "cd012a786a7bbb1177a93c70552c16a473bd0466e8c4f0428eedcc648b077815",
     "suite_all_models_methods_detection_vs_utility.png": "3565f1fec2288ab1dfa3a3eb7740c2fdc05c648acd4bd74b022c6d11ef5c2b83",
     "suite_all_models_methods_score_decomposition.csv": "75e88049c70a3cdbfa6831aabb61f633064ea9aedcd20bc20124964ef49a3abb",
     "suite_all_models_methods_score_decomposition.json": "4e544c83399705887ddb694659a72c4a004d3410a9c5e4680ff525a501b712ce",
-    "suite_all_models_methods_score_decomposition.pdf": "33268e4624b226fcefa75dc331d29490448d46ff323569acfdbad57067dd8dad",
+    "suite_all_models_methods_score_decomposition.pdf": "e2d83fff67c93cbde1c1349fbfdeca6ee1c47462d969900b53724747edcf7c77",
     "suite_all_models_methods_score_decomposition.png": "f2f31af503019e7b4b1814b6f1ed8d0a39cc4fba33a62f58f94bd3c5466f29a4"
   },
   "required_table_hashes": {

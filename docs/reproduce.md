@@ -43,6 +43,10 @@ Use this path with the raw-results artifact described in [`docs/artifacts.md`](a
 ```bash
 curl -L -o CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst \
   'https://zenodo.org/records/19740954/files/CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst?download=1'
+curl -L -o CodeMarkBench-sanitized-release-bundle-20260425T181337.tar.zst \
+  'https://zenodo.org/records/19740954/files/CodeMarkBench-sanitized-release-bundle-20260425T181337.tar.zst?download=1'
+curl -L -o raw_results_manifest.json \
+  'https://zenodo.org/records/19740954/files/raw_results_manifest.json?download=1'
 curl -L -o SHA256SUMS.txt \
   'https://zenodo.org/records/19740954/files/SHA256SUMS.txt?download=1'
 sha256sum -c SHA256SUMS.txt
@@ -92,6 +96,19 @@ GPU access is required.
   - `deepseek-ai/deepseek-coder-6.7b-instruct`
 
 For the rerun-backed public release, those identifiers are not enough by themselves. The release metadata should also pin the resolved local Hugging Face snapshot revision for each roster entry, using the cache's `refs/main -> snapshots/<revision>` mapping that was actually used during the run.
+
+To anchor the Python side of a fresh rerun to the recorded CUDA 12.4 release
+environment, install the project requirements with the release constraints:
+
+```bash
+python -m pip install --extra-index-url https://download.pytorch.org/whl/cu124 \
+  -r requirements.txt -r requirements-remote.txt -c constraints-release-cu124.txt
+```
+
+Level 3 remains an end-to-end rerun path, so it still depends on external
+availability of the pinned Hugging Face model snapshots and the pinned upstream
+baseline repositories. GitHub plus Zenodo are sufficient for Level 1 inspection
+and Level 2 archival summary regeneration without the original execution server.
 
 ### Upstream Baselines
 

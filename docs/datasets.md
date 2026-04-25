@@ -69,6 +69,13 @@ These crafted slices are intentionally part of the canonical benchmark rather th
 
 Release-facing benchmark construction and review are checklist-driven. The public wording for the crafted benchmark families and the benchmark-level release packet is reviewed against the dataset schema, executable contract, and release-source manifests, and those crafted release sources should be described as curated release content.
 
+Some frozen prompt or note strings inside the executed crafted JSONL records may
+still contain earlier release-family wording from the result-of-record run. That
+wording is part of the archived benchmark input text and is preserved for
+result consistency; it should be interpreted as project-authored, manually
+reviewed curated content rather than a claim about external expert credentials
+or a separate expert-panel study.
+
 `math/bit ops` belongs to the same curated crafted family inventory. It is reviewed and finalized under the same release process and should not be described as a separate auto-constructed public benchmark slice.
 
 The task prompts and semantic-contract fields inside the crafted release records now use the release-family wording directly. Reviewers should read those rows as belonging only to the three crafted release families listed above, not as separate public benchmark lanes or independent generated datasets.

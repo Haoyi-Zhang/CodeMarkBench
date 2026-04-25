@@ -20,6 +20,11 @@ The public GitHub repository is intentionally small and release-facing:
 - materialized summary figures, summary tables, lightweight result inventories, and manifests
 
 Large raw full-run outputs are **not** stored in git.
+Local working copies may contain ignored engineering residues such as
+`_PROJECT_CONTEXT/`, `_review_outputs/`, `results/matrix/`, or
+`results/certifications/`; those paths are outside the public companion mirror
+and outside the sanitized Zenodo bundle. The release-facing surface is the
+tracked GitHub tree plus the published Zenodo files listed below.
 
 The public GitHub repository alone is therefore sufficient for code inspection, dataset statistics, formulas, canonical release-suite definitions, and the materialized tracked full-run summary exports, but **not** for reconstructing the rerun-backed raw artifact for the single-host full-suite result without restoring the external raw artifact locally.
 
@@ -102,6 +107,9 @@ Repository templates for the first two files live under:
 - [`artifacts/raw_results_manifest.template.json`](../artifacts/raw_results_manifest.template.json)
 - [`artifacts/SHA256SUMS.template.txt`](../artifacts/SHA256SUMS.template.txt)
 
+The templates are intentionally placeholders. The published manifest and
+checksum file are the Zenodo files, not the repository templates.
+
 The exact environment capture is refreshed by remote preflight for the formal rerun and travels with the public archival artifact and sanitized release bundle. Any helper files left in the repository are packaging inputs rather than the archival record itself.
 
 ## Rebuilding Summary Outputs
@@ -111,6 +119,10 @@ After downloading the raw artifact, regenerate the summary outputs locally:
 ```bash
 curl -L -o CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst \
   'https://zenodo.org/records/19740954/files/CodeMarkBench-canonical-raw-results-suite_all_models_methods-20260424T183928.tar.zst?download=1'
+curl -L -o CodeMarkBench-sanitized-release-bundle-20260425T181337.tar.zst \
+  'https://zenodo.org/records/19740954/files/CodeMarkBench-sanitized-release-bundle-20260425T181337.tar.zst?download=1'
+curl -L -o raw_results_manifest.json \
+  'https://zenodo.org/records/19740954/files/raw_results_manifest.json?download=1'
 curl -L -o SHA256SUMS.txt \
   'https://zenodo.org/records/19740954/files/SHA256SUMS.txt?download=1'
 sha256sum -c SHA256SUMS.txt

@@ -19,7 +19,7 @@
     "go"
   ],
   "collection_name": "crafted_original_release",
-  "construction_note": "Crafted sources use expert-constructed benchmark families together with cross-language review, deterministic release checks, and manually finalized public release records.",
+  "construction_note": "Crafted sources use project-authored curated benchmark families together with cross-language review, deterministic release checks, and manually finalized public release records.",
   "contract_drift_families": [],
   "coverage": {
     "claimed_language_count": 5,

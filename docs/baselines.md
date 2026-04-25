@@ -52,6 +52,20 @@ For the active public release:
 - upstream provenance does not imply uniform redistribution permission across all four methods
 - detector-internal runtime failures are surfaced as benchmark metadata instead of crashing the entire run, and negative-control coverage excludes those unavailable detector outcomes instead of counting them as clean evidence
 
+The redistribution boundary is summarized in
+[`../THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md). In short, `STONE`,
+`SWEET`, and `EWD` are pinned and fetchable but remain `license_status:
+unverified`, so the public artifact records provenance rather than bundling
+their source trees. `KGW` is marked redistributable but is fetched through the
+same pinned workflow for consistency.
+
+Adapter-boundary claim: `CodeMarkBench` owns the orchestration layer, local model
+loading, decoding policy, run metadata, and error handling. The benchmark does
+not intentionally alter the upstream watermark/detector algorithm logic for the
+four active runtime comparisons; reviewer-side audits should compare the pinned
+upstream commits above with the project adapter code rather than expecting the
+GitHub companion repository to vendor every upstream file.
+
 ## Screening Notes
 
 The public paper/repo wording keeps the baseline-screening story explicit. See [`docs/baseline_screening.md`](baseline_screening.md) for the reviewer-facing screening note.

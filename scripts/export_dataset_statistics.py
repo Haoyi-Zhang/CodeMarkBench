@@ -230,17 +230,17 @@ _ACTIVE_RELEASE_POLICY: dict[str, dict[str, Any]] = {
     },
     "crafted_original": {
         "active_execution_slice": "/".join(OFFICIAL_RUNTIME_COMMON_MULTILINGUAL_LANGUAGES),
-        "sampling_rule": "expert-constructed five-language family/category-balanced crafted release source",
+        "sampling_rule": "project-authored curated five-language family/category-balanced crafted release source",
         "release_scored": True,
     },
     "crafted_translation": {
         "active_execution_slice": "/".join(OFFICIAL_RUNTIME_COMMON_MULTILINGUAL_LANGUAGES),
-        "sampling_rule": "expert-constructed five-language family/category-balanced crafted release source",
+        "sampling_rule": "project-authored curated five-language family/category-balanced crafted release source",
         "release_scored": True,
     },
     "crafted_stress": {
         "active_execution_slice": "/".join(OFFICIAL_RUNTIME_COMMON_MULTILINGUAL_LANGUAGES),
-        "sampling_rule": "expert-constructed five-language family/category-balanced crafted release source",
+        "sampling_rule": "project-authored curated five-language family/category-balanced crafted release source",
         "release_scored": True,
     },
 }

@@ -207,6 +207,8 @@ The corrected archival Zenodo record for the raw result artifact and sanitized r
 - the paper-facing figure surface is intentionally narrow: score decomposition, detection-vs-utility, release-slice composition, and one conceptual evaluation-overview panel, while exact-value leaderboard and breakdown evidence stays table-first
 - those summary outputs can be regenerated from the external raw artifact, or from a local rerun of the same canonical `configs/matrices/suite_all_models_methods.json` / `suite_all_models_methods` manifest-profile pair with the same official runtime roster and pinned model revisions; custom reruns must write to custom output paths instead of reusing the canonical `suite_all_models_methods` release surface
 - raw full-run artifacts are documented in [`docs/artifacts.md`](docs/artifacts.md)
+- citation metadata lives in [`CITATION.cff`](CITATION.cff) and [`docs/citation.md`](docs/citation.md)
+- third-party baseline redistribution boundaries are summarized in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)
 - the rerun-backed public packet also discloses the exact model identifiers, resolved model snapshot revisions, environment-of-record capture, and baseline provenance used for the published run
 - release limitations and validity boundaries are summarized in [`docs/threats_to_validity.md`](docs/threats_to_validity.md)
 
@@ -215,6 +217,13 @@ Use [`docs/reproduce.md`](docs/reproduce.md) for the canonical three-level revie
 1. browse the repository-tracked dataset statistics, docs, and materialized full-run summary exports
 2. regenerate full-run summaries from the external raw artifact
 3. rerun the canonical release suite on a GPU host
+
+The first two levels are independent of the original execution server after the
+GitHub repository and Zenodo record are available. A fresh Level 3 rerun still
+depends on external availability of the pinned Hugging Face model snapshots and
+the pinned upstream baseline repositories; use
+[`constraints-release-cu124.txt`](constraints-release-cu124.txt) to anchor the
+recorded CUDA 12.4 Python package versions.
 
 Level 1 is the default reviewer path. Level 2 is the artifact-backed regeneration path described in [`docs/artifacts.md`](docs/artifacts.md). If you already have rerun-backed summary JSON/tables but not the raw matrix tree, use the redraw-only path in [`docs/reproduce.md`](docs/reproduce.md) instead of `regenerate`.
 
