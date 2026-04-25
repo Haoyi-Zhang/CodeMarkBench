@@ -71,7 +71,7 @@ def test_render_markdown_includes_normalized_tool_error() -> None:
 def test_public_safe_paths_remove_host_aliases_and_absolute_python_path() -> None:
     payload = {
         "host": {"hostname": "private-host", "fqdn": "private-host.example"},
-        "python": {"executable": "/root/data/codemarkbench_env/tosem_release_clean/bin/python"},
+        "python": {"executable": "/example/private/codemarkbench_env/tosem_release_clean/bin/python"},
     }
 
     capture_environment._apply_public_safe_paths(payload)
@@ -90,7 +90,7 @@ def test_public_safe_paths_remove_host_aliases_and_absolute_python_path() -> Non
             "tools": {},
         }
     )
-    assert "/root/data" not in rendered
+    assert "/example/private" not in rendered
     assert "private-host" not in rendered
 
 
