@@ -76,6 +76,22 @@ def _sha256(path: Path) -> str:
     return _sha256_bytes(path.read_bytes())
 
 
+def _table_hash_matches(path: Path, expected: str, name: str) -> tuple[bool, str]:
+    raw = path.read_bytes()
+    actual = _sha256_bytes(raw)
+    if actual == expected:
+        return True, actual
+    lf_actual = _sha256_bytes(raw.replace(b"\r\n", b"\n"))
+    if lf_actual == expected:
+        print(
+            f"warning: {name} matches after CRLF-to-LF normalization; "
+            "ensure the public release tree uses LF line endings.",
+            file=sys.stderr,
+        )
+        return True, actual
+    return False, actual
+
+
 def _load_json(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
@@ -127,8 +143,9 @@ def _check_export_hashes(identity: dict[str, Any]) -> list[str]:
         if not path.exists():
             errors.append(f"missing table artifact: {path}")
             continue
-        actual = _sha256(path)
-        if actual != str(expected).strip().lower():
+        expected_hash = str(expected).strip().lower()
+        matched, actual = _table_hash_matches(path, expected_hash, name)
+        if not matched:
             errors.append(f"table hash mismatch for {name}: expected {expected}, got {actual}")
     return errors
 

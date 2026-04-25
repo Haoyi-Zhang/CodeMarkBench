@@ -178,14 +178,15 @@ def _nullable_float(value: Any) -> float | None:
 def _write_rows_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     fieldnames = sorted({key for row in rows for key in row.keys()})
     with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         for row in rows:
             writer.writerow(row)
 
 
 def _write_rows_json(path: Path, rows: list[dict[str, Any]]) -> None:
-    path.write_text(json.dumps(rows, indent=2, ensure_ascii=False), encoding="utf-8")
+    with path.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(rows, indent=2, ensure_ascii=False))
 
 
 def _sha256_file(path: Path) -> str:
@@ -330,7 +331,8 @@ def _write_summary_export_identity(
         "figure_stems": list(_PUBLICATION_FIGURE_STEMS),
     }
     identity_path = output_dir / f"{_SUMMARY_EXPORT_IDENTITY_STEM}.json"
-    identity_path.write_text(json.dumps(identity_payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    with identity_path.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(identity_payload, indent=2, ensure_ascii=False) + "\n")
 
 
 def _annotate_release_rows(rows: list[dict[str, Any]], **fields: Any) -> list[dict[str, Any]]:
