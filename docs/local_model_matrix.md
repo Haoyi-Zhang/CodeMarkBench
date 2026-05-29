@@ -20,7 +20,7 @@ GitHub documents the canonical pinned roster and workflow, but it does not vendo
 ## Environment Variables
 
 - `HF_ACCESS_TOKEN` (optional for the canonical public roster; required only when you explicitly want a token-backed probe or access to gated/private models)
-- `HF_ACCESS_TOKEN_FALLBACK` (optional fallback when the primary token is not populated on the current host)
+- `HF_ACCESS_TOKEN_FALLBACK` (optional fallback when the primary token is not populated on the active host)
 
 ## Active Baseline Roster
 

@@ -351,7 +351,7 @@ Otherwise:
 This makes unsupported generalization neutral rather than misleadingly perfect, while still letting supported-zero slices remain visibly weak.
 `headline_generalization` is therefore a released cross-slice stability
 summary. It must not be described as absolute deployment robustness across all
-models, languages, tasks, or future watermarking methods.
+models, languages, tasks, or unseen watermarking methods.
 
 Descriptive rollups can also emit:
 
@@ -450,4 +450,4 @@ included only to keep the relative gate interpretable.
 
 ## Diagnostic-Only Scale Consistency
 
-`scale_consistency` remains released, but it is diagnostic-only in this iteration. It does not enter the current headline score. This keeps within-family scale variation visible without giving one family disproportionate influence over the final public headline.
+`scale_consistency` remains released, but it is diagnostic-only in the locked release. It does not enter the headline score. This keeps within-family scale variation visible without giving one family disproportionate influence over the final public headline.

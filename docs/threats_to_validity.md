@@ -33,9 +33,9 @@ The multilingual comparison uses a balanced five-language execution slice. That 
 
 The active baseline roster is restricted to four pinned runtime baselines that
 can share one generation-time comparison contract. Excluded training or
-model-modifying methods are not judged inferior; they are outside the current
+model-modifying methods are not judged inferior; they are outside the locked
 runtime-only leaderboard and should be evaluated with their own compatible
-contract in a future release.
+contract in a separate release.
 
 ## Reproducibility Validity
 

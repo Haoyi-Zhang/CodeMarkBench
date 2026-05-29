@@ -26,7 +26,7 @@ This repository treats the runtime methods used in the release as pinned upstrea
 
 ## Primary Active Workflow
 
-- `make suite-precheck` remains an engineering smoke gate on the current active benchmark.
+- `make suite-precheck` remains an engineering smoke gate on the locked active benchmark.
 - The formal release-facing rerun path is the single-host 8-GPU workflow documented in [`docs/remote_linux_gpu.md`](remote_linux_gpu.md).
 - `bash scripts/remote/run_formal_single_host_full.sh` is the canonical single-host full-suite entrypoint.
 - The identical-execution-class two-host sharded path remains available only as an optional reviewer-safe reproduction and throughput mode.

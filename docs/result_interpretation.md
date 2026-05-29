@@ -8,7 +8,7 @@ them as run failures or hidden post-processing.
 The release result is a completed canonical matrix: `run_count = 140`,
 `success_count = 140`, `failed_count = 0`, and
 `execution_mode = single_host_canonical`. The result should be read as evidence
-that current source-code watermarking methods expose reliability gaps under a
+that the evaluated source-code watermarking methods expose reliability gaps under a
 common executable benchmark, not as evidence that the methods are uniformly
 robust.
 
