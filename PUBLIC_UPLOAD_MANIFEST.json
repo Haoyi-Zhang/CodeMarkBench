@@ -1,7 +1,7 @@
 {
   "project": "CodeMarkBench",
   "package_role": "independent_public_code_artifact",
-  "paper_facing_evidence": "140 completed runs; five model settings; four baseline families; seven source groups; zero failed locked runs.",
+  "reported_evidence_boundary": "140 completed runs; five model settings; four baseline families; seven source groups; zero failed locked runs.",
   "included_file_count": 352,
   "included_files": [
     ".env.example",
